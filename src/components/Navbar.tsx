@@ -46,13 +46,14 @@ export function Navbar() {
             <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4">
                 <div className="mr-4 flex">
                     <Link href="/" className="mr-6 flex items-center space-x-2">
-                        <motion.span
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="font-bold text-xl tracking-tight text-primary p-2"
-                        >
-                            MA
-                        </motion.span>
+                        <div className="relative w-10 h-10 rounded-full overflow-hidden border border-border shadow-sm">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/HeadShot.jpg"
+                                alt="MA"
+                                className="object-cover w-full h-full"
+                            />
+                        </div>
                     </Link>
                 </div>
 
