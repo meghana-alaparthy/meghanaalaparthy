@@ -1,22 +1,22 @@
 export interface BlogPost {
-    title: string;
-    excerpt: string;
-    date: string;
-    readTime: string;
-    slug: string;
-    tags: string[];
-    content: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  slug: string;
+  tags: string[];
+  content: string;
 }
 
 export const blogPosts: BlogPost[] = [
-    {
-        title: "Scaling Event-Driven Microservices: Lessons from Production",
-        excerpt: "A deep dive into handling high-throughput streams using Apache Kafka, Redis consumer groups, and idempotent processing strategies.",
-        date: "2024-03-15",
-        readTime: "8 min read",
-        slug: "scaling-event-driven-microservices",
-        tags: ["System Design", "Kafka", "Microservices", "Redis"],
-        content: `
+  {
+    title: "Scaling Event-Driven Microservices: Lessons from Production",
+    excerpt: "A deep dive into handling high-throughput streams using Apache Kafka, Redis consumer groups, and idempotent processing strategies.",
+    date: "2025-11-15",
+    readTime: "8 min read",
+    slug: "scaling-event-driven-microservices",
+    tags: ["System Design", "Kafka", "Microservices", "Redis"],
+    content: `
 ## The Challenge: 10k Events Per Second
 
 In a recent project, we faced a scalability bottleneck. Our monolithic queue consumer couldn't keep up with the burst traffic during peak hours (generating ~10k events/sec). The lag caused data inconsistency and user facing delays.
@@ -62,15 +62,15 @@ async function processEvent(event: Event) {
 - **Latency**: p99 reduced from 2s to 150ms.
 - **Reliability**: 99.99% uptime during peak loads.
         `
-    },
-    {
-        title: "Virtualization & Memoization: Optimizing React for Speed",
-        excerpt: "Rendering 10,000+ rows shouldn't freeze your browser. Techniques to maintain 60FPS in data-heavy enterprise dashboards.",
-        date: "2024-02-28",
-        readTime: "6 min read",
-        slug: "optimizing-react-performance",
-        tags: ["React", "Performance", "Frontend", "JavaScript"],
-        content: `
+  },
+  {
+    title: "Virtualization & Memoization: Optimizing React for Speed",
+    excerpt: "Rendering 10,000+ rows shouldn't freeze your browser. Techniques to maintain 60FPS in data-heavy enterprise dashboards.",
+    date: "2025-04-22",
+    readTime: "6 min read",
+    slug: "optimizing-react-performance",
+    tags: ["React", "Performance", "Frontend", "JavaScript"],
+    content: `
 ## The DOM is the Bottleneck
 
 In complex enterprise dashboards, the most common performance killer isn't JavaScript execution—it's layout thrashing and excessive DOM nodes. A recent feature required displaying a table with 10,000+ verified transaction records. Rendering this natively caused the main thread to freeze for 3+ seconds.
@@ -112,15 +112,15 @@ This prevented components that only *trigger* updates from re-rendering when the
 ## Outcome
 The dashboard now loads instantly, scrolls at a buttery smooth 60fps, and can handle datasets up to 100k rows without degradation.
         `
-    },
-    {
-        title: "Database Sharding: A System Design Deep Dive",
-        excerpt: "Horizontal scaling strategies for relational databases. How we utilized consistent hashing to distribute 50TB of data.",
-        date: "2023-11-10",
-        readTime: "10 min read",
-        slug: "database-sharding-strategies",
-        tags: ["System Design", "Database", "Backend", "Scalability"],
-        content: `
+  },
+  {
+    title: "Database Sharding: A System Design Deep Dive",
+    excerpt: "Horizontal scaling strategies for relational databases. How we utilized consistent hashing to distribute 50TB of data.",
+    date: "2024-10-10",
+    readTime: "10 min read",
+    slug: "database-sharding-strategies",
+    tags: ["System Design", "Database", "Backend", "Scalability"],
+    content: `
 ## When Vertical Scaling Hits a Wall
 
 At a certain scale (usually terabytes of data or thousands of write ops/sec), getting a bigger database server isn't cost-effective or possible. This is where **Sharding** (Horizontal Partitioning) comes in.
@@ -152,5 +152,5 @@ The biggest trade-off with sharding is losing ACID transactions across shards. W
 ## Conclusion
 Sharding introduced complexity, but it allowed us to scale our write throughput linearly. By combining it with read-replicas for eventual consistency, we achieved a highly available and partition-tolerant system.
         `
-    }
+  }
 ];
