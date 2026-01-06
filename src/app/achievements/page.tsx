@@ -46,6 +46,37 @@ export default function AchievementsPage() {
                         </ul>
                     </div>
                 </div>
+
+                {/* Projects */}
+                <div className="bg-card rounded-xl border border-border p-8 shadow-sm mt-8">
+                    <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                        🎮 Interactive Projects
+                    </h2>
+                    <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+                        <div>
+                            <h3 className="text-xl font-bold">Boggle Game & Solver</h3>
+                            <p className="text-muted-foreground mt-2">
+                                A fully interactive Boggle game with an integrated solver.
+                                Built with JavaScript and Python (logic adapted for web).
+                            </p>
+                            <div className="flex gap-2 mt-3 text-sm">
+                                <span className="bg-secondary px-2 py-1 rounded">JavaScript</span>
+                                <span className="bg-secondary px-2 py-1 rounded">Algorithm</span>
+                                <span className="bg-secondary px-2 py-1 rounded">Game Dev</span>
+                            </div>
+                        </div>
+                        <div className="flex gap-3">
+                            <a
+                                href="/boggle/game/"
+                                target="_blank"
+                                className="px-5 py-2.5 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                Play Game
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     );
