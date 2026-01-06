@@ -29,7 +29,7 @@ export default function Home() {
                     <div className="space-y-6">
                         <h2 className="text-2xl font-bold text-foreground">Core Tech Stack</h2>
                         <div className="flex flex-wrap gap-2">
-                            {["Java", "Spring Boot", "Kafka", "Microservices", "Azure", "React", "PostgreSQL", "Docker"].map(tech => (
+                            {["Java", "Python", "PHP", "Spring Boot", "Microservices", "Azure", "React", "PostgreSQL", "Docker"].map(tech => (
                                 <span key={tech} className="px-3 py-1 bg-blue-50 text-blue-700 text-sm font-medium rounded-full border border-blue-100">
                                     {tech}
                                 </span>
