@@ -21,7 +21,7 @@ export function Hero() {
                     <span className="px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-6 inline-block">
                         Software Developer III
                     </span>
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
+                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-slate-900 to-slate-600 bg-clip-text text-transparent">
                         {resumeData.personalInfo.name}
                     </h1>
                     <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -40,7 +40,7 @@ export function Hero() {
                     <Link
                         href={resumeData.personalInfo.linkedin}
                         target="_blank"
-                        className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-white"
+                        className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-secondary-foreground"
                         aria-label="LinkedIn"
                     >
                         <Linkedin size={24} />
@@ -48,14 +48,14 @@ export function Hero() {
                     <Link
                         href={resumeData.personalInfo.github}
                         target="_blank"
-                        className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-white"
+                        className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-secondary-foreground"
                         aria-label="GitHub"
                     >
                         <Github size={24} />
                     </Link>
                     <Link
                         href={`mailto:${resumeData.personalInfo.email}`}
-                        className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-white"
+                        className="p-3 rounded-full bg-secondary hover:bg-secondary/80 transition-colors text-secondary-foreground"
                         aria-label="Email"
                     >
                         <Mail size={24} />
