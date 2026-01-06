@@ -38,7 +38,7 @@ export default function AboutPage() {
                         transition={{ delay: 0.2 }}
                         className="text-xl text-muted-foreground leading-relaxed"
                     >
-                        My journey from Hyderabad to building distributed systems in the US.
+                        My journey from Vijayawada to building distributed systems in the US.
                     </motion.p>
                 </div>
             </section>

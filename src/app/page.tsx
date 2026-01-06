@@ -13,7 +13,7 @@ export default function Home() {
                     <div className="md:col-span-2 space-y-6">
                         <h2 className="text-2xl font-bold text-foreground">About Me</h2>
                         <p className="text-muted-foreground leading-relaxed">
-                            From Hyderabad to Dallas, my journey has been defined by a passion for building scalable systems.
+                            From Vijayawada to Dallas, my journey has been defined by a passion for building scalable systems.
                             As a <strong>Software Developer III</strong>, I specialize in backend architecture and high-throughput services.
                         </p>
                         <Link href="/about" className="inline-flex items-center text-primary font-medium hover:underline">
@@ -22,7 +22,7 @@ export default function Home() {
 
                         <div className="flex gap-4 text-sm font-medium text-foreground/80 pt-2">
                             <span className="bg-secondary px-3 py-1 rounded-md">📍 Dallas, TX</span>
-                            <span className="bg-secondary px-3 py-1 rounded-md">💼 5 Years Exp.</span>
+                            <span className="bg-secondary px-3 py-1 rounded-md">💼 3 Years Exp.</span>
                             <span className="bg-secondary px-3 py-1 rounded-md">🚀 Backend & Platform</span>
                         </div>
                     </div>
