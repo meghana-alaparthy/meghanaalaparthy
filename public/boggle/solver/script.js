@@ -30,10 +30,10 @@ class BoggleSolver {
 
     async loadDictionary() {
         try {
-            const response = await fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt');
+            const response = await fetch('../assets/dictionary.txt');
             const text = await response.text();
             const words = text.split('\n');
-            
+
             for (let word of words) {
                 word = word.trim().toLowerCase();
                 if (word.length >= 3) {
@@ -71,7 +71,7 @@ class BoggleSolver {
 
     solve(grid) {
         if (!this.isLoaded) return [];
-        
+
         const size = Math.sqrt(grid.length);
         const foundWords = new Set();
         const visited = Array(size).fill().map(() => Array(size).fill(false));
@@ -119,8 +119,8 @@ class BoggleSolver {
 
         const directions = [
             [-1, -1], [-1, 0], [-1, 1],
-            [0, -1],           [0, 1],
-            [1, -1],  [1, 0],  [1, 1]
+            [0, -1], [0, 1],
+            [1, -1], [1, 0], [1, 1]
         ];
 
         for (let [dr, dc] of directions) {
@@ -161,7 +161,7 @@ function generateGrid(size) {
     currentSize = size;
     gridContainer.innerHTML = '';
     gridContainer.className = `grid-${size}`;
-    
+
     // Toggle buttons
     if (size === 4) {
         btn4.classList.add('active');
@@ -177,7 +177,7 @@ function generateGrid(size) {
         input.maxLength = 1;
         input.className = 'cell';
         input.dataset.index = i;
-        
+
         // Auto-move focus
         input.addEventListener('input', (e) => {
             if (e.target.value.match(/[^a-zA-Z]/)) {
@@ -220,7 +220,7 @@ function fillRandom() {
     const dice = "AAEEGNELTTYMAOOTTWABBJOOEHRTVCIMOTUDISTTYEIOSSTDELRVRYTERWHVTOWN"; // Just a mashup of common letters
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
     const inputs = document.querySelectorAll('.cell');
-    
+
     inputs.forEach(input => {
         // Weighted random is better, but simple random char for now
         // Or using common letter frequency
@@ -244,7 +244,7 @@ solveBtn.addEventListener('click', () => {
         alert("Please fill all cells.");
         return;
     }
-    
+
     const results = solver.solve(grid);
     displayResults(results);
 });
@@ -253,13 +253,13 @@ function displayResults(results) {
     resultsArea.classList.remove('hidden');
     wordCount.textContent = `(${results.length})`;
     resultsList.innerHTML = '';
-    
+
     if (results.length === 0) {
         resultsList.innerHTML = '<li style="padding:1rem; text-align:center;">No words found.</li>';
         return;
     }
 
-    results.forEach(({word, score}) => {
+    results.forEach(({ word, score }) => {
         const li = document.createElement('li');
         li.className = 'result-item';
         li.innerHTML = `<span>${word}</span><span class="result-score">${score}</span>`;
