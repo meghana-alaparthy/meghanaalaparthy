@@ -56,10 +56,10 @@ export default function AboutPage() {
                     >
                         <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
                             <Globe className="w-6 h-6" />
-                            From Hyderabad to the Global Stage
+                            From Vijayawada to the Global Stage
                         </h2>
                         <p className="text-lg text-muted-foreground leading-loose">
-                            My engineering journey began in Hyderabad, India, where I built my foundation in computer science.
+                            My engineering journey began in Vijayawada, India, where I built my foundation in computer science.
                             However, looking for bigger challenges and a broader perspective on technology, I moved to the United States in 2022.
                             This transition wasn't just geographical; it was professional. It exposed me to high-scale distributed systems
                             and the rigorous standards of enterprise software development.
@@ -75,12 +75,13 @@ export default function AboutPage() {
                     >
                         <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
                             <Briefcase className="w-6 h-6" />
-                            Ownership & Scale
+                            Rapid Growth: Intern to Lead in 2 Years
                         </h2>
                         <p className="text-lg text-muted-foreground leading-loose">
-                            At Paycom, I learned that being a Senior Engineer isn't just about writing code—it's about <strong>ownership</strong>.
-                            I transitioned from simply implementing features to designing end-to-end architectures for payroll systems that handle millions of transactions.
-                            I strive to build resilient, fault-tolerant services that users can rely on, day in and day out.
+                            At Paycom, my career trajectory has been defined by <strong>impact and ownership</strong>. I started as a Software Developer Intern and quickly proved my ability to tackle complex architectural challenges.
+                            <br /><br />
+                            By consistently delivering high-quality code and taking responsibility for critical system components, I was promoted to <strong>Software Developer II</strong> and then <strong>Software Developer III</strong> within just two years.
+                            This rapid progression reflects my commitment to not just solving problems, but owning the outcome and driving technical excellence in high-pressure environments.
                         </p>
                     </motion.div>
 
