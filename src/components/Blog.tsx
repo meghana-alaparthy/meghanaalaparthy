@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { blogPosts } from "@/data/blog";
 import { ArrowRight, Clock } from "lucide-react";
+import Link from "next/link";
 
 export function Blog() {
     return (
@@ -19,35 +20,36 @@ export function Blog() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {blogPosts.map((post, index) => (
-                        <motion.article
-                            key={index}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="flex flex-col h-full bg-card rounded-xl border border-border p-6 hover:shadow-lg transition-all hover:border-primary/50 group cursor-pointer"
-                        >
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                                <time>{post.date}</time>
-                                <span>•</span>
-                                <span className="flex items-center gap-1">
-                                    <Clock size={12} />
-                                    {post.readTime}
-                                </span>
-                            </div>
+                        <Link href={`/blog/${post.slug}`} key={index} className="block group">
+                            <motion.article
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                                className="flex flex-col h-full bg-card rounded-xl border border-border p-6 hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer"
+                            >
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                                    <time>{post.date}</time>
+                                    <span>•</span>
+                                    <span className="flex items-center gap-1">
+                                        <Clock size={12} />
+                                        {post.readTime}
+                                    </span>
+                                </div>
 
-                            <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-                                {post.title}
-                            </h3>
+                                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                                    {post.title}
+                                </h3>
 
-                            <p className="text-muted-foreground text-sm mb-4 flex-grow">
-                                {post.excerpt}
-                            </p>
+                                <p className="text-muted-foreground text-sm mb-4 flex-grow line-clamp-3">
+                                    {post.excerpt}
+                                </p>
 
-                            <div className="mt-auto flex items-center text-primary font-medium text-sm gap-2">
-                                Read More <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                            </div>
-                        </motion.article>
+                                <div className="mt-auto flex items-center text-primary font-medium text-sm gap-2">
+                                    Read Article <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                </div>
+                            </motion.article>
+                        </Link>
                     ))}
                 </div>
             </div>
