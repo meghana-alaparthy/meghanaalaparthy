@@ -15,23 +15,36 @@ export default function AchievementsPage() {
                     </p>
                 </div>
 
-                <div className="space-y-6">
-                    {resumeData.achievements.map((achievement, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                            className="flex gap-4 p-6 rounded-xl bg-card border border-border hover:shadow-md transition-shadow"
-                        >
-                            <div className="flex-shrink-0 mt-1 text-yellow-500">
-                                {index === 0 ? <Trophy size={28} /> : index === 1 ? <Medal size={28} /> : <Star size={28} />}
-                            </div>
-                            <div>
-                                <p className="text-lg leading-relaxed">{achievement}</p>
-                            </div>
-                        </motion.div>
-                    ))}
+                <div className="grid gap-8">
+                    {/* Awards */}
+                    <div className="bg-card rounded-xl border border-border p-8 shadow-sm">
+                        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                            🏆 Awards & Recognition
+                        </h2>
+                        <ul className="space-y-4">
+                            {resumeData.achievements.slice(0, 1).map((item, index) => (
+                                <li key={index} className="flex gap-4">
+                                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                                    <span className="text-lg text-muted-foreground">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Certifications & Others */}
+                    <div className="bg-card rounded-xl border border-border p-8 shadow-sm">
+                        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                            📜 Certifications & Leadership
+                        </h2>
+                        <ul className="space-y-4">
+                            {resumeData.achievements.slice(1).map((item, index) => (
+                                <li key={index} className="flex gap-4">
+                                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                                    <span className="text-lg text-muted-foreground">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </main>
