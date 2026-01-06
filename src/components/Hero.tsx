@@ -18,6 +18,15 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
+                    <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-8 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src="/HeadShot.jpg"
+                            alt="Meghana Alaparthy"
+                            className="object-cover w-full h-full"
+                        />
+                    </div>
+
                     <span className="px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-6 inline-block">
                         Software Developer III
                     </span>
