@@ -96,7 +96,7 @@ export default function AboutPage() {
                         <ul className="space-y-4">
                             <li className="flex gap-3">
                                 <span className="text-green-500 font-bold">✓</span>
-                                <span className="text-muted-foreground">Deep expertise in backend scalability (Kafka, Redis, partitioning strategies).</span>
+                                <span className="text-muted-foreground">Deep expertise in backend development using <strong>Java, PHP, and Python</strong>.</span>
                             </li>
                             <li className="flex gap-3">
                                 <span className="text-green-500 font-bold">✓</span>
