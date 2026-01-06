@@ -7,10 +7,10 @@ import { resumeData } from "@/data/resume";
 
 export function Hero() {
     return (
-        <section className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden bg-background px-4">
-            {/* Background Gradients */}
-            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] pointer-events-none" />
+        <section className="min-h-[80vh] flex flex-col justify-center items-center relative overflow-hidden bg-background px-4 pt-16">
+            {/* Background Decoration */}
+            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-100/50 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-4xl w-full text-center z-10 space-y-8">
                 <motion.div
