@@ -1,156 +1,68 @@
-export interface BlogPost {
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  slug: string;
-  tags: string[];
-  content: string;
-}
-
-export const blogPosts: BlogPost[] = [
+export const blogPosts = [
   {
-    title: "Scaling Event-Driven Microservices: Lessons from Production",
-    excerpt: "A deep dive into handling high-throughput streams using Apache Kafka, Redis consumer groups, and idempotent processing strategies.",
-    date: "2025-11-15",
+    slug: "scaling-payroll-engine-java",
+    title: "Scaling a Payroll Engine to Process 1M+ Records",
+    date: "October 15, 2024",
     readTime: "8 min read",
-    slug: "scaling-event-driven-microservices",
-    tags: ["System Design", "Kafka", "Microservices", "Redis"],
+    excerpt: "How we optimized a legacy Java-based payroll system to reduce processing time by 35% using parallel streams and batch processing.",
     content: `
-## The Challenge: 10k Events Per Second
+            <h2>The Challenge</h2>
+            <p>Our payroll system was struggling to meet SLAs as the user base grew. Processing 1 million records was taking over 6 hours, risking delayed payments.</p>
+            
+            <h2>Optimization Strategy</h2>
+            <p>We identified bottlenecks in database I/O and sequential processing. The solution involved:</p>
+            <ul>
+                <li><strong>Parallel Streams:</strong> Utilizing Java's parallel stream API to process independent employee records concurrently.</li>
+                <li><strong>Batch Processing:</strong> Implementing JDBC batch updates to minimize round-trips to the PostgreSQL database.</li>
+                <li><strong>Memory Management:</strong> Tuning the JVM heap size and optimizing object creation to reduce garbage collection pauses.</li>
+            </ul>
 
-In a recent project, we faced a scalability bottleneck. Our monolithic queue consumer couldn't keep up with the burst traffic during peak hours (generating ~10k events/sec). The lag caused data inconsistency and user facing delays.
-
-## The Solution Architecture
-
-We decoupled the ingestion logic from processing using **Apache Kafka** for durable buffering and moved to a microservices architecture.
-
-### 1. Partition Strategy
-We utilized semantic partitioning (sharding by \`userId\`) to ensure that all events for a specific user were processed in order, while still allowing us to parallelize processing across 50+ partitions.
-
-### 2. Consumer Groups & Auto-Scaling
-We deployed consumers in Kubernetes with HPA (Horizontal Pod Autoscaling) based on consumer lag. When lag increased, K8s spun up more pods, and Kafka rebalanced the partitions automatically.
-
-## Handling Failures: Dead Letter Queues (DLQ)
-
-Processing isn't always smooth. We implemented a **Retry-DLQ** pattern:
-1.  **Main Topic**: Fast path.
-2.  **Retry Topic**: Delayed consumption (exponential backoff).
-3.  **DLQ**: Final resting place for poison messages after 3 retries.
-
-## Idempotency is Key
-With "at-least-once" delivery, duplicate events are inevitable. We used **Redis** to store a \`processed_event_id:timestamp\` key with a TTL. Before processing any event, we checked this set to ensure exactly-once processing characteristics.
-
-\`\`\`typescript
-async function processEvent(event: Event) {
-  const isProcessed = await redis.set(
-    \`processed:\${event.id}\`, 
-    '1', 
-    'NX', 
-    'EX', 
-    86400
-  );
-  
-  if (!isProcessed) return; // Idempotent skip
-  
-  await executeBusinessLogic(event);
-}
-\`\`\`
-
-## Results
-- **Throughput**: Increased by 400%.
-- **Latency**: p99 reduced from 2s to 150ms.
-- **Reliability**: 99.99% uptime during peak loads.
-        `
+            <h2>Results</h2>
+            <p>This re-architecture reduced the total processing time to just under 4 hours, a <strong>35% improvement</strong> in performance.</p>
+        `,
+    tags: ["Java", "System Design", "Performance", "Best for Interview Prep"]
   },
   {
-    title: "Virtualization & Memoization: Optimizing React for Speed",
-    excerpt: "Rendering 10,000+ rows shouldn't freeze your browser. Techniques to maintain 60FPS in data-heavy enterprise dashboards.",
-    date: "2025-04-22",
-    readTime: "6 min read",
-    slug: "optimizing-react-performance",
-    tags: ["React", "Performance", "Frontend", "JavaScript"],
+    slug: "monolith-to-microservices-migration",
+    title: "Decomposing a Monolith: A Domain-Driven Approach",
+    date: "September 02, 2024",
+    readTime: "12 min read",
+    excerpt: "Lessons learned from breaking down a PHP monolithic application into scalable Java & Python microservices.",
     content: `
-## The DOM is the Bottleneck
+            <h2>Why Microservices?</h2>
+            <p>Our legacy PHP monolith was becoming a nightmare to maintain. Deployments were risky, and scaling specific modules (like the tax calculation engine) was impossible without scaling the entire app.</p>
 
-In complex enterprise dashboards, the most common performance killer isn't JavaScript execution—it's layout thrashing and excessive DOM nodes. A recent feature required displaying a table with 10,000+ verified transaction records. Rendering this natively caused the main thread to freeze for 3+ seconds.
+            <h2>The Strangler Fig Pattern</h2>
+            <p>We adopted the Strangler Fig pattern to gradually migrate functionality. We started by identifying bounded contexts:</p>
+            <ul>
+                <li><strong>User Service:</strong> Handled authentication and profiles (Migrated to Java/Spring Boot).</li>
+                <li><strong>Reporting Service:</strong> Handled heavy data aggregation (Migrated to Python).</li>
+            </ul>
 
-## Windowing (Virtualization)
-
-Instead of rendering all 10k rows, we only render what's visible in the viewport (plus a small buffer). I used \`react-window\` to implement this.
-
-**Key Wins:**
-- **DOM Nodes**: Reduced from ~50,000 to ~200.
-- **Memory Usage**: Dropped by 80%.
-
-## Memoization Strategy
-
-Virtualization is useless if every scroll event triggers a re-render of unrelated components.
-
-### 1. React.memo
-We wrapped row components in \`React.memo\`. A custom comparator function ensured rows only re-rendered if their specific data changed, ignoring parent state updates.
-
-### 2. Stable Callbacks
-Passing anonymous functions to child components breaks strict equality checks.
-\`\`\`tsx
-// Bad ❌
-<Row onClick={() => handleClick(id)} />
-
-// Good ✅
-const handleRowClick = useCallback((id: string) => {
-  // logic
-}, []);
-\`\`\`
-
-## Optimizing Context Providers
-We frequently see "Context Hell" causing app-wide re-renders. We split our large \`state\` context into separate providers:
-- \`DataDispatcherContext\` (stable dispatch functions)
-- \`DataStateContext\` (value that changes)
-
-This prevented components that only *trigger* updates from re-rendering when the *data* changes.
-
-## Outcome
-The dashboard now loads instantly, scrolls at a buttery smooth 60fps, and can handle datasets up to 100k rows without degradation.
-        `
+            <h2>Key Takeaways</h2>
+            <p>Migrating to microservices introduced distributed complexity but significantly improved our <strong>deployment frequency</strong> and allowed independent scaling of critical components.</p>
+        `,
+    tags: ["Microservices", "Architecture", "PHP", "Migration", "Best for Interview Prep"]
   },
   {
-    title: "Database Sharding: A System Design Deep Dive",
-    excerpt: "Horizontal scaling strategies for relational databases. How we utilized consistent hashing to distribute 50TB of data.",
-    date: "2024-10-10",
+    slug: "optimizing-database-throughput",
+    title: "High-Throughput Database Strategies for Financial Systems",
+    date: "August 20, 2024",
     readTime: "10 min read",
-    slug: "database-sharding-strategies",
-    tags: ["System Design", "Database", "Backend", "Scalability"],
+    excerpt: "Techniques for handling high-volume write operations in a financial ledger using Partitioning and Redis caching.",
     content: `
-## When Vertical Scaling Hits a Wall
+            <h2>The Bottleneck</h2>
+            <p>Financial systems require strict ACID compliance, which often becomes a bottleneck for write-heavy workloads.</p>
 
-At a certain scale (usually terabytes of data or thousands of write ops/sec), getting a bigger database server isn't cost-effective or possible. This is where **Sharding** (Horizontal Partitioning) comes in.
+            <h2>Partitioning Strategy</h2>
+            <p>We implemented <strong>Horizontal Partitioning (Sharding)</strong> based on Tenant ID. this ensured that high-volume clients were isolated to specific database shards, preventing resource contention.</p>
 
-## Sharding Strategies
+            <h2>Caching Layer</h2>
+            <p>A <strong>Redis Write-Through Cache</strong> was introduced for frequently accessed ledger balances. This reduced read load on the primary DB by 60%.</p>
 
-### 1. Key-Based Sharding (Hash)
-We used a hash function on the primary key (\`user_id\`) to determine the shard.
-\`shard_id = hash(user_id) % total_shards\`
-
-*   **Pro**: Even distribution of data.
-*   **Con**: Resharding (adding new nodes) is expensive because keys move around.
-
-### consistent Hashing
-To solve the resharding problem, we implemented **Consistent Hashing** using a virtual ring topology. This minimized data movement to only $1/n$ (where n is the number of nodes) when a node is added/removed.
-
-## The Routing Layer
-
-We implemented a lightweight application-side routing layer (Smart Proxy) that intercepted SQL queries.
-1.  Parser extracts the \`sharding_key\`.
-2.  Lookup map finds the active physical connection string.
-3.  Query is forwarded to the correct DB instance.
-
-## Handling Cross-Shard Joins
-The biggest trade-off with sharding is losing ACID transactions across shards. We handled this by:
-1.  **Data Denormalization**: Duplicating essential join data (like user profiles) into the shard where it's needed.
-2.  **Application-Level Joins**: Fetching data from Shard A and Shard B in parallel, then stitching it together in the API service.
-
-## Conclusion
-Sharding introduced complexity, but it allowed us to scale our write throughput linearly. By combining it with read-replicas for eventual consistency, we achieved a highly available and partition-tolerant system.
-        `
+            <h3>Outcome</h3>
+            <p>The system can now handle <strong>50,000 transactions per second (TPS)</strong> with sub-millisecond latency.</p>
+        `,
+    tags: ["Database", "SQL", "Redis", "Scalability", "Best for Interview Prep"]
   }
 ];
