@@ -33,7 +33,7 @@ class BoggleSolver {
             const response = await fetch('https://raw.githubusercontent.com/dwyl/english-words/master/words_alpha.txt');
             const text = await response.text();
             const words = text.split('\n');
-            
+
             for (let word of words) {
                 word = word.trim().toLowerCase();
                 if (word.length >= 3) {
@@ -71,7 +71,7 @@ class BoggleSolver {
 
     solve(grid) {
         if (!this.isLoaded) return [];
-        
+
         const size = Math.sqrt(grid.length);
         const foundWords = new Set();
         const visited = Array(size).fill().map(() => Array(size).fill(false));
@@ -119,8 +119,8 @@ class BoggleSolver {
 
         const directions = [
             [-1, -1], [-1, 0], [-1, 1],
-            [0, -1],           [0, 1],
-            [1, -1],  [1, 0],  [1, 1]
+            [0, -1], [0, 1],
+            [1, -1], [1, 0], [1, 1]
         ];
 
         for (let [dr, dc] of directions) {
@@ -137,16 +137,24 @@ class BoggleSolver {
 // UI Logic
 const solver = new BoggleSolver();
 let currentSize = 4;
+let score = 0;
+let foundWordsSet = new Set();
+let timerInterval;
+let gameActive = false;
+let timeRemaining = 120; // 2 minutes
 
 const gridContainer = document.getElementById('grid-container');
-const btn4 = document.getElementById('size-4');
-const btn5 = document.getElementById('size-5');
-const randomBtn = document.getElementById('random-btn');
-const solveBtn = document.getElementById('solve-btn');
-const clearBtn = document.getElementById('clear-btn');
+const newGameBtn = document.getElementById('new-game-btn');
+const shareBtn = document.getElementById('share-btn');
+const wordInput = document.getElementById('word-input');
+const submitBtn = document.getElementById('submit-word-btn');
+const scoreDisplay = document.getElementById('current-score');
+const timerDisplay = document.getElementById('time-remaining');
+const foundWordsList = document.getElementById('found-words');
 const resultsArea = document.getElementById('results-area');
-const resultsList = document.getElementById('results-list');
-const wordCount = document.getElementById('word-count');
+const finalScoreDisplay = document.getElementById('final-score');
+const missedWordsList = document.getElementById('missed-words-list');
+const viewMissedBtn = document.getElementById('view-missed-btn');
 const loadingOverlay = document.getElementById('loading-overlay');
 
 // Initialize
@@ -154,115 +162,187 @@ const loadingOverlay = document.getElementById('loading-overlay');
     loadingOverlay.classList.remove('hidden');
     await solver.loadDictionary();
     loadingOverlay.classList.add('hidden');
-    generateGrid(4);
+
+    // Check URL for board
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedBoard = urlParams.get('board');
+    if (sharedBoard && sharedBoard.length === 16) {
+        generateGrid(4, sharedBoard);
+    } else {
+        generateGrid(4);
+    }
 })();
 
-function generateGrid(size) {
+function generateGrid(size, presetChars = null) {
     currentSize = size;
     gridContainer.innerHTML = '';
     gridContainer.className = `grid-${size}`;
-    
-    // Toggle buttons
-    if (size === 4) {
-        btn4.classList.add('active');
-        btn5.classList.remove('active');
+
+    // Dice distribution for classic Boggle
+    const dice = [
+        "AAEEGN", "ELTTY", "AOOTTW", "ABBJOO", "EHRTVW", "CIMOTU",
+        "DISTTY", "EIOSST", "DELRVY", "ACHOPS", "HIMNQU", "EEINSU",
+        "EEGHNW", "AFFKPS", "HLNNRZ", "DEILRX"
+    ];
+
+    let chars = [];
+    if (presetChars) {
+        chars = presetChars.split('');
     } else {
-        btn5.classList.add('active');
-        btn4.classList.remove('active');
+        // Shuffle dice
+        for (let i = dice.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [dice[i], dice[j]] = [dice[j], dice[i]];
+        }
+        // Roll dice
+        chars = dice.map(die => die.charAt(Math.floor(Math.random() * die.length)));
     }
 
     for (let i = 0; i < size * size; i++) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.maxLength = 1;
-        input.className = 'cell';
-        input.dataset.index = i;
-        
-        // Auto-move focus
-        input.addEventListener('input', (e) => {
-            if (e.target.value.match(/[^a-zA-Z]/)) {
-                e.target.value = '';
-                return;
-            }
-            if (e.target.value) {
-                const next = document.querySelector(`.cell[data-index="${i + 1}"]`);
-                if (next) next.focus();
+        const div = document.createElement('div');
+        div.className = 'cell-display';
+        div.textContent = chars[i];
+        div.dataset.index = i;
+        gridContainer.appendChild(div);
+    }
+}
+
+function startGame() {
+    if (gameActive) return;
+
+    score = 0;
+    scoreDisplay.textContent = score;
+    foundWordsSet.clear();
+    foundWordsList.innerHTML = '';
+    resultsArea.classList.add('hidden');
+    wordInput.value = '';
+    wordInput.disabled = false;
+    submitBtn.disabled = false;
+    gameActive = true;
+    timeRemaining = 120;
+
+    if (!newGameBtn.dataset.keepBoard) {
+        generateGrid(4);
+    }
+    newGameBtn.dataset.keepBoard = ""; // Reset
+    newGameBtn.textContent = "Restart";
+
+    updateTimer();
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimer();
+        if (timeRemaining <= 0) {
+            endGame();
+        }
+    }, 1000);
+
+    wordInput.focus();
+}
+
+function updateTimer() {
+    const m = Math.floor(timeRemaining / 60);
+    const s = timeRemaining % 60;
+    timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+
+    if (timeRemaining < 10) {
+        timerDisplay.parentElement.style.color = 'red';
+    } else {
+        timerDisplay.parentElement.style.color = 'inherit';
+    }
+}
+
+function endGame() {
+    clearInterval(timerInterval);
+    gameActive = false;
+    wordInput.disabled = true;
+    submitBtn.disabled = true;
+    newGameBtn.textContent = "New Game";
+
+    resultsArea.classList.remove('hidden');
+    finalScoreDisplay.textContent = score;
+
+    // Find all possible words
+    const grid = getGridValues();
+    const allWords = solver.solve(grid);
+    missedWordsList.innerHTML = '';
+
+    if (allWords.length > 0) {
+        const list = document.createElement('ul');
+        allWords.forEach(res => {
+            if (!foundWordsSet.has(res.word)) {
+                const li = document.createElement('li');
+                li.textContent = `${res.word} (${res.score})`;
+                list.appendChild(li);
             }
         });
-
-        // Backspace move back
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !e.target.value) {
-                const prev = document.querySelector(`.cell[data-index="${i - 1}"]`);
-                if (prev) {
-                    prev.focus();
-                    // prev.value = ''; // Optional: clear prev on backspace? Standard is usually just focus.
-                }
-            }
-        });
-
-        gridContainer.appendChild(input);
+        missedWordsList.appendChild(list);
     }
 }
 
 function getGridValues() {
-    const inputs = document.querySelectorAll('.cell');
-    let grid = [];
-    for (let input of inputs) {
-        if (!input.value) return null; // Incomplete
-        grid.push(input.value.toLowerCase());
-    }
-    return grid;
+    const cells = document.querySelectorAll('.cell-display');
+    return Array.from(cells).map(c => c.textContent.toLowerCase());
 }
 
-function fillRandom() {
-    // Dice distribution for classic Boggle (roughly)
-    const dice = "AAEEGNELTTYMAOOTTWABBJOOEHRTVCIMOTUDISTTYEIOSSTDELRVRYTERWHVTOWN"; // Just a mashup of common letters
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const inputs = document.querySelectorAll('.cell');
-    
-    inputs.forEach(input => {
-        // Weighted random is better, but simple random char for now
-        // Or using common letter frequency
-        const common = "eeeeeeeeaaaaaaaiiiooooooonnnnnrrrrrrtttttllllssssuuuuddddggg";
-        const char = common.charAt(Math.floor(Math.random() * common.length));
-        input.value = char.toUpperCase();
-    });
-}
+function checkWord() {
+    if (!gameActive) return;
 
-btn4.addEventListener('click', () => generateGrid(4));
-btn5.addEventListener('click', () => generateGrid(5));
-randomBtn.addEventListener('click', fillRandom);
-clearBtn.addEventListener('click', () => {
-    document.querySelectorAll('.cell').forEach(i => i.value = '');
-    resultsArea.classList.add('hidden');
-});
+    const word = wordInput.value.trim().toLowerCase();
+    wordInput.value = '';
+    wordInput.focus();
 
-solveBtn.addEventListener('click', () => {
+    if (word.length < 3) return;
+    if (foundWordsSet.has(word)) return; // Already found
+
+    // Use solver to validate logic availability
+    // Note: In a real game, we'd check if path exists on board. 
+    // The solver.solve structure finds ALL words. We can optimize by checking `trie` and `dfs` just for this word, 
+    // but reusing `solve` is easier for valid dictionary + valid path check.
+    // Optimization: Run solve ONCE at start? No, board changes.
+    // For individual checking, we'd need a specific `isValid(word, grid)` function.
+    // Let's implement a quick path finder or just run solve (might be slow if spamming?). 
+    // Boggle grids are small, solve is instant (<50ms).
+
     const grid = getGridValues();
-    if (!grid) {
-        alert("Please fill all cells.");
-        return;
+    const allWords = solver.solve(grid);
+    const match = allWords.find(w => w.word === word);
+
+    if (match) {
+        foundWordsSet.add(word);
+        score += match.score;
+        scoreDisplay.textContent = score;
+
+        const span = document.createElement('span');
+        span.className = 'found-word';
+        span.textContent = word;
+        foundWordsList.prepend(span); // Add to top
+    } else {
+        // Shake animation for wrong word?
+        wordInput.classList.add('error');
+        setTimeout(() => wordInput.classList.remove('error'), 300);
     }
-    
-    const results = solver.solve(grid);
-    displayResults(results);
+}
+
+newGameBtn.addEventListener('click', startGame);
+
+submitBtn.addEventListener('click', checkWord);
+wordInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') checkWord();
 });
 
-function displayResults(results) {
-    resultsArea.classList.remove('hidden');
-    wordCount.textContent = `(${results.length})`;
-    resultsList.innerHTML = '';
-    
-    if (results.length === 0) {
-        resultsList.innerHTML = '<li style="padding:1rem; text-align:center;">No words found.</li>';
-        return;
-    }
+shareBtn.addEventListener('click', () => {
+    const grid = getGridValues();
+    const boardString = grid.join('').toUpperCase();
+    const url = `${window.location.origin}${window.location.pathname}?board=${boardString}`;
 
-    results.forEach(({word, score}) => {
-        const li = document.createElement('li');
-        li.className = 'result-item';
-        li.innerHTML = `<span>${word}</span><span class="result-score">${score}</span>`;
-        resultsList.appendChild(li);
+    navigator.clipboard.writeText(url).then(() => {
+        const originalText = shareBtn.textContent;
+        shareBtn.textContent = "Copied! Share Link";
+        setTimeout(() => shareBtn.textContent = originalText, 2000);
     });
-}
+});
+
+viewMissedBtn.addEventListener('click', () => {
+    missedWordsList.classList.toggle('hidden');
+});
