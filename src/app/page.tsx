@@ -13,11 +13,14 @@ export default function Home() {
                     <div className="md:col-span-2 space-y-6">
                         <h2 className="text-2xl font-bold text-foreground">About Me</h2>
                         <p className="text-muted-foreground leading-relaxed">
-                            I am a <strong>Software Developer III</strong> with 5 years of experience building specialized financial and payroll systems.
-                            My expertise lies in designing scalable backend architectures, optimizing database performance for high-volume transactions,
-                            and leading cross-functional teams to deliver critical infrastructure.
+                            From Hyderabad to Dallas, my journey has been defined by a passion for building scalable systems.
+                            As a <strong>Software Developer III</strong>, I specialize in backend architecture and high-throughput services.
                         </p>
-                        <div className="flex gap-4 text-sm font-medium text-foreground/80">
+                        <Link href="/about" className="inline-flex items-center text-primary font-medium hover:underline">
+                            Read my full story <ArrowRight size={16} className="ml-1" />
+                        </Link>
+
+                        <div className="flex gap-4 text-sm font-medium text-foreground/80 pt-2">
                             <span className="bg-secondary px-3 py-1 rounded-md">📍 Dallas, TX</span>
                             <span className="bg-secondary px-3 py-1 rounded-md">💼 5 Years Exp.</span>
                             <span className="bg-secondary px-3 py-1 rounded-md">🚀 Backend & Platform</span>
