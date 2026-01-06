@@ -69,7 +69,7 @@ export function Hero() {
                     className="pt-4"
                 >
                     <a
-                        href="/resume.pdf" // Placeholder for actual resume file
+                        href="/Meghana_Alaparthy_Resume.pdf" // Placeholder for actual resume file
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-white font-medium hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
                     >
                         <FileText size={20} />

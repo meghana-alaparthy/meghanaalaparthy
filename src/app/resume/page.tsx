@@ -24,7 +24,7 @@ export default function ResumePage() {
                             Contact
                         </a>
                         <a
-                            href="/resume.pdf"
+                            href="/Meghana_Alaparthy_Resume.pdf"
                             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all shadow-sm"
                         >
                             <FileDown size={18} />
