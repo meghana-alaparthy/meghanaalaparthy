@@ -37,6 +37,12 @@ export function Blog() {
                                     </span>
                                 </div>
 
+                                <div className="mb-2">
+                                    <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wide border border-green-200">
+                                        Best for Interview Prep
+                                    </span>
+                                </div>
+
                                 <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
                                     {post.title}
                                 </h3>
