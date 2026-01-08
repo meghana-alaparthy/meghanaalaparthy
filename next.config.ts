@@ -2,11 +2,23 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'export',
-  // Optional: Change links `/me` -> `/me/` and emits `/me.html` -> `/me/index.html`
   trailingSlash: true,
-  // Optional: Prevent automatic image optimization as not supported in static export
   images: {
     unoptimized: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: '/boggle/game/index.html',
+        destination: '/boggle/game/',
+        permanent: true,
+      },
+      {
+        source: '/boggle/solver/index.html',
+        destination: '/boggle/solver/',
+        permanent: true,
+      },
+    ];
   },
 };
 

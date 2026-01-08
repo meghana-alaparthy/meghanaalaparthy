@@ -56,13 +56,11 @@ export default function AboutPage() {
                     >
                         <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
                             <Globe className="w-6 h-6" />
-                            From Vijayawada to the Global Stage
+                            From Vision to Production
                         </h2>
                         <p className="text-lg text-muted-foreground leading-loose">
-                            My engineering journey began in Vijayawada, India, where I built my foundation in computer science.
-                            However, looking for bigger challenges and a broader perspective on technology, I moved to the United States in 2022.
-                            This transition wasn't just geographical; it was professional. It exposed me to high-scale distributed systems
-                            and the rigorous standards of enterprise software development.
+                            My journey began in Vijayawada, India, fueled by a curiosity for how complex systems operate under the hood. In 2022, I transitioned to the US to pursue a Master’s in Computer Science at the University of Oklahoma, where I specialized in distributed systems and high-concurrency environments.
+                            What started as academic research quickly evolved into industry application during my tenure at Paycom, where I now lead critical backend initiatives as an SDE III.
                         </p>
                     </motion.div>
 
@@ -75,13 +73,11 @@ export default function AboutPage() {
                     >
                         <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
                             <Briefcase className="w-6 h-6" />
-                            Rapid Growth: Intern to Lead in 2 Years
+                            Architecting at Scale: The Paycom Chapter
                         </h2>
                         <p className="text-lg text-muted-foreground leading-loose">
-                            At Paycom, my career trajectory has been defined by <strong>impact and ownership</strong>. I started as a Software Developer Intern and quickly proved my ability to tackle complex architectural challenges.
-                            <br /><br />
-                            By consistently delivering high-quality code and taking responsibility for critical system components, I was promoted to <strong>Software Developer II</strong> and then <strong>Software Developer III</strong> within just two years.
-                            This rapid progression reflects my commitment to not just solving problems, but owning the outcome and driving technical excellence in high-pressure environments.
+                            Since joining Paycom in 2023, my focus has shifted from implementation to **system design and longevity**. I’ve been instrumental in dismantling monolithic legacy systems, replacing them with resilient, event-driven microservices that power our core payroll engine.
+                            Promotion to SDE III was a milestone that affirmed my commitment to not just writing code, but building infrastructure that survives traffic spikes and complex edge cases. I focus on observability, performance tuning, and cross-functional leadership to ensure our platforms are as stable as they are fast.
                         </p>
                     </motion.div>
 
@@ -95,16 +91,16 @@ export default function AboutPage() {
                         <h3 className="text-2xl font-bold mb-4">What I Bring to the Table</h3>
                         <ul className="space-y-4">
                             <li className="flex gap-3">
-                                <span className="text-green-500 font-bold">✓</span>
-                                <span className="text-muted-foreground">Deep expertise in backend development using <strong>Java, PHP, and Python</strong>.</span>
+                                <span className="text-blue-500 font-bold">✓</span>
+                                <span className="text-muted-foreground">Expertise in **Distributed Systems Architecture** and Event-Driven Pipelines.</span>
                             </li>
                             <li className="flex gap-3">
-                                <span className="text-green-500 font-bold">✓</span>
-                                <span className="text-muted-foreground">A product-first mindset: I build to solve real user problems.</span>
+                                <span className="text-blue-500 font-bold">✓</span>
+                                <span className="text-muted-foreground">Strategic technical leadership: Guiding architectural trade-offs between performance, cost, and scale.</span>
                             </li>
                             <li className="flex gap-3">
-                                <span className="text-green-500 font-bold">✓</span>
-                                <span className="text-muted-foreground">Cross-functional leadership: Bridging the gap between Product, QA, and Engineering.</span>
+                                <span className="text-blue-500 font-bold">✓</span>
+                                <span className="text-muted-foreground">Cross-functional collaboration: Bridging the gap between engineering, product, and enterprise security.</span>
                             </li>
                         </ul>
                     </motion.div>

@@ -1,5 +1,50 @@
 export const blogPosts = [
   {
+    slug: "distributed-transaction-system-paycom",
+    title: "Building a Distributed Transaction System at Scale",
+    date: "January 15, 2025",
+    readTime: "15 min read",
+    excerpt: "How I implemented the Saga pattern to manage distributed consistency across 12 microservices processing $50M in payroll daily.",
+    content: `
+            <h2>The Consistency Challenge</h2>
+            <p>Moving from a monolith to microservices introduced the classic 'Dual Write' problem. We needed to update the 'Payroll' and 'Benefits' databases atomically.</p>
+            
+            <h2>Solution: The Saga Pattern</h2>
+            <p>I chose an <strong>Orchestration-based Saga</strong> using an asynchronous event bus. A central 'Saga Orchestrator' service managed the state of each transaction.</p>
+            
+            <h3>Key Trade-offs</h3>
+            <ul>
+                <li><strong>Choreography vs Orchestration:</strong> Orchestration was chosen for better observability, despite the single point of failure risk (mitigated by HA deployment).</li>
+                <li><strong>Consistency Model:</strong> We accepted Eventual Consistency in favor of high availability (AP over CP).</li>
+            </ul>
+
+            <h2>Impact</h2>
+            <p>Zero data inconsistencies were reported in the first 6 months, and we handled a peak load of <strong>2,000 TPS</strong> during end-of-month processing.</p>
+        `,
+    tags: ["System Design", "Event Driven", "Microservices", "Distributed Systems"]
+  },
+  {
+    slug: "debugging-message-queue-performance",
+    title: "Debugging a Production Message Queue Performance Issue",
+    date: "December 10, 2024",
+    readTime: "10 min read",
+    excerpt: "A deep dive into how I diagnosed and fixed a consumer lag issue that threatened our 99.99% SLA.",
+    content: `
+            <h2>The Symptoms</h2>
+            <p>Our 'Reporting' service started lagging 2 hours behind real-time. The consumer group was rebalancing constantly.</p>
+
+            <h2>Root Cause Analysis</h2>
+            <p>Using <strong>Prometheus and Grafana</strong>, we identified that one partition was receiving 80% of the traffic due to a poor partition key strategy (TenantID).</p>
+
+            <h2>The Fix</h2>
+            <p>We implemented a <strong>Custom Partitioner</strong> based on 'EmployeeID' to ensure uniform data distribution. We also tuned the batch size and timeout configurations.</p>
+            
+            <h3>Results</h3>
+            <p>Consumer lag dropped to near-zero, and throughput increased by <strong>300%</strong>.</p>
+        `,
+    tags: ["Messaging", "Performance", "Debugging", "SRE"]
+  },
+  {
     slug: "scaling-payroll-engine-java",
     title: "Scaling a Payroll Engine to Process 1M+ Records",
     date: "October 15, 2024",
@@ -23,46 +68,25 @@ export const blogPosts = [
     tags: ["Java", "System Design", "Performance", "Best for Interview Prep"]
   },
   {
-    slug: "monolith-to-microservices-migration",
-    title: "Decomposing a Monolith: A Domain-Driven Approach",
-    date: "September 02, 2024",
-    readTime: "12 min read",
-    excerpt: "Lessons learned from breaking down a PHP monolithic application into scalable Java & Python microservices.",
+    slug: "designing-netflix-cdn",
+    title: "System Design: Designing Netflix's CDN (Open Connect)",
+    date: "November 05, 2024",
+    readTime: "20 min read",
+    excerpt: "A theoretical deep dive into designing a global content delivery network handling exabytes of data.",
     content: `
-            <h2>Why Microservices?</h2>
-            <p>Our legacy PHP monolith was becoming a nightmare to maintain. Deployments were risky, and scaling specific modules (like the tax calculation engine) was impossible without scaling the entire app.</p>
-
-            <h2>The Strangler Fig Pattern</h2>
-            <p>We adopted the Strangler Fig pattern to gradually migrate functionality. We started by identifying bounded contexts:</p>
+            <h2>Requirements</h2>
             <ul>
-                <li><strong>User Service:</strong> Handled authentication and profiles (Migrated to Java/Spring Boot).</li>
-                <li><strong>Reporting Service:</strong> Handled heavy data aggregation (Migrated to Python).</li>
+                <li><strong>Scale:</strong> 200M+ concurrent streams.</li>
+                <li><strong>Latency:</strong> < 50ms start time.</li>
+                <li><strong>Fault Tolerance:</strong> Region failure must not stop playback.</li>
             </ul>
 
-            <h2>Key Takeaways</h2>
-            <p>Migrating to microservices introduced distributed complexity but significantly improved our <strong>deployment frequency</strong> and allowed independent scaling of critical components.</p>
+            <h2>Proposed Architecture</h2>
+            <p>I would leverage a hierarchy of <strong>Open Connect Appliances (OCAs)</strong> embedded directly in ISP networks.</p>
+            
+            <h3>Traffic Steering</h3>
+            <p>Using a custom DNS steering service to direct clients to the nearest healthy OCA based on BGP routing tables and real-time health checks.</p>
         `,
-    tags: ["Microservices", "Architecture", "PHP", "Migration", "Best for Interview Prep"]
-  },
-  {
-    slug: "optimizing-database-throughput",
-    title: "High-Throughput Database Strategies for Financial Systems",
-    date: "August 20, 2024",
-    readTime: "10 min read",
-    excerpt: "Techniques for handling high-volume write operations in a financial ledger using Partitioning and Redis caching.",
-    content: `
-            <h2>The Bottleneck</h2>
-            <p>Financial systems require strict ACID compliance, which often becomes a bottleneck for write-heavy workloads.</p>
-
-            <h2>Partitioning Strategy</h2>
-            <p>We implemented <strong>Horizontal Partitioning (Sharding)</strong> based on Tenant ID. this ensured that high-volume clients were isolated to specific database shards, preventing resource contention.</p>
-
-            <h2>Caching Layer</h2>
-            <p>A <strong>Redis Write-Through Cache</strong> was introduced for frequently accessed ledger balances. This reduced read load on the primary DB by 60%.</p>
-
-            <h3>Outcome</h3>
-            <p>The system can now handle <strong>50,000 transactions per second (TPS)</strong> with sub-millisecond latency.</p>
-        `,
-    tags: ["Database", "SQL", "Redis", "Scalability", "Best for Interview Prep"]
+    tags: ["System Design", "Architecture", "CDN", "Interview Prep"]
   }
 ];

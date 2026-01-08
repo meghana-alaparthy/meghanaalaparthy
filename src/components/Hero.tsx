@@ -38,17 +38,17 @@ export function Hero() {
                     <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 mb-8 text-muted-foreground font-medium">
                         <div className="flex items-center justify-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-green-500" />
-                            <span>Improved system latency by 40%</span>
+                            <span>Cut API latency by 60%</span>
                         </div>
                         <div className="hidden md:block text-slate-300">|</div>
                         <div className="flex items-center justify-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-blue-500" />
-                            <span>Designed services handling 50k+ TPS</span>
+                            <span>Breaking down monoliths into services</span>
                         </div>
                     </div>
 
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-4">
-                        Targeting <strong>Senior Software Engineer / Staff Engineer</strong> roles focusing on distributed systems and high-scale architectures.
+                        I'm looking for <strong>Senior/Staff SWE roles</strong> where I can work on complex distributed systems.
                     </p>
                 </motion.div>
 
