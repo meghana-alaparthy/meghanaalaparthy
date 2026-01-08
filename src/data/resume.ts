@@ -74,56 +74,56 @@ export const resumeData = {
         {
             name: "High-Performance Search Engine",
             period: "Sept ‘24 - Dec ‘24",
-            description: "Architected a full-text search engine utilizing a multi-threaded indexing pipeline to handle large-scale document retrieval.",
-            problem: "Indexing millions of semi-structured documents requires an efficient memory footprint and optimized ranking algorithms to avoid linear search performance degradation.",
-            approach: "Implemented a distributed-ready Inverted Index and the Vector Space Model (TF-IDF), leveraging Java NIO for non-blocking IO and custom data structures to minimize garbage collection overhead.",
-            outcome: "Achieved sub-10ms search latency across 250k+ documents with high precision ranking and sub-second full-reindexing capability.",
-            techStack: ["Java", "NIO", "Algorithms", "Linear Algebra"]
+            description: "Architected a full-text search engine utilizing a multi-threaded indexing pipeline to handle large-scale document retrieval with sub-millisecond precision.",
+            problem: "Scaling full-text search requires moving beyond naive string matching. The challenge was maintaining a low memory profile while handling an ever-growing corpus of semi-structured data without hitting O(n) performance cliffs.",
+            approach: "Engineered a custom Inverted Index and optimized Vector Space Model (TF-IDF). I leveraged Java NIO for high-throughput, non-blocking disk access and specialized hash maps to reduce garbage collection pressure—a decision driven by the need for deterministic latency in search-critical applications.",
+            outcome: "Achieved sub-10ms search latency across 250k+ documents, demonstrating a deep mastery of data structures and memory-efficient algorithm design.",
+            techStack: ["Java", "NIO", "Information Retrieval", "Algorithm Design"]
         },
         {
             name: "Distributed Log Aggregator",
             period: "June ‘24 - Present",
-            description: "Designed a centralized observability platform to aggregate and process real-time telemetry from heterogeneous microservice environments.",
-            problem: "Distributed debugging in multi-cloud environments is slowed by log fragmentation and lack of real-time searchability during critical production incidents.",
-            approach: "Built a high-throughput pipeline utilizing Kafka as a message broker, C# workers for stream processing, and ElasticSearch for indexed, persistent storage.",
-            outcome: "Scaled ingestion to handle 50,000+ events per second, reducing MTTR (Mean Time to Resolution) from hours to minutes for the engineering org.",
+            description: "Designed an enterprise-grade observability platform to unify telemetry across heterogeneous microservice environments, focusing on real-time incident diagnostics.",
+            problem: "In a world of ephemeral microservices, fragmented logging is the primary bottleneck for reliability. I initiated this project to eliminate the 'blind spots' during production outages where logs are scattered across dozens of nodes.",
+            approach: "Built a resilient ingestion pipeline using Kafka as a high-durability message backbone. I architected asynchronous C# workers to perform real-time stream enrichment before persistent storage in ElasticSearch, balancing write-heavy throughput with read-heavy search requirements.",
+            outcome: "Capable of processing 50,000+ events per second, effectively reducing Mean Time to Resolution (MTTR) by providing a single, searchable source of truth for the entire engineering organization.",
             techStack: ["Kafka", "C#", "ElasticSearch", "Redis", "Distributed Systems"]
         },
         {
             name: "PII Redaction Engine",
             period: "Feb’23 – Apr’23",
-            description: "Developed an automated PII (Personally Identifiable Information) sanitization pipeline to enforce global data privacy compliance (GDRP/CCPA).",
-            problem: "Traditional pattern matching fails to capture contextual sensitive data, leading to high false-negative rates and potential data leaks.",
-            approach: "Integrated advanced NLP (Natural Language Processing) models with a high-speed Deterministic Finite Automaton (DFA) scanner to identify and redact sensitive entities in real-time streams.",
-            outcome: "Reduced sensitive data exposure by 40% while maintaining sub-20ms processing latency per request.",
-            techStack: ["Python", "NLTK", "Regex Optimization", "Stream Processing"]
+            description: "Developed an automated PII (Personally Identifiable Information) sanitization pipeline to enforce global data privacy compliance and prevent high-stakes data leaks.",
+            problem: "Standard regex-based redaction is a fragile 'check-box' solution that misses contextual leaks. I wanted to build a system that *understands* data, reducing the liability of accidental exposure in unstructured feedback streams.",
+            approach: "Fused NLP-based entity recognition with a high-performance Deterministic Finite Automaton (DFA) scanner. This hybrid approach allowed for the capture of complex PII (like addresses or custom IDs) while maintaining the sub-20ms latency required for real-time traffic interception.",
+            outcome: "Successfully reduced sensitive data exposure by 40%, proving that security and performance can coexist through smart architectural choices.",
+            techStack: ["Python", "NLTK", "DFA Optimization", "Security Engineering"]
         },
         {
             name: "Low-Latency Market Protocol",
             period: "Oct’22 – Nov’22",
-            description: "Engineered a high-frequency multicast protocol for real-time financial data dissemination.",
-            problem: "Standard TCP performance is insufficient for HFT (High-Frequency Trading) due to retransmission overhead and head-of-line blocking.",
-            approach: "Authored a custom UDP-based protocol with a lightweight reliability layer, optimizing for jitter reduction and maximum packet throughput.",
-            outcome: "Minimized one-way latency to <50 microseconds per hop, enabling near-instantaneous data synchronization across 100+ concurrent clients.",
-            techStack: ["C", "UDP Multicast", "Socket Programming", "Network Systems"]
+            description: "Engineered a specialized multicast protocol for real-time financial data dissemination, optimizing for the ultra-low latency requirements of high-frequency systems.",
+            problem: "Generic protocols like TCP introduce retransmission delays (jitter) that are unacceptable in high-stakes trading. The goal was to eliminate 'Head-of-Line' blocking and minimize the jitter variance that plagues financial networks.",
+            approach: "Designed a custom UDP-based protocol with a lightweight, NACK-based reliability layer. I optimized for zero-copy memory transfers and prioritized packet throughput to ensure that all 100+ concurrent clients receive price-sensitive data within microseconds of each other.",
+            outcome: "Reduced one-way latency to <50 microseconds per hop, achieving a performance tier normally reserved for specialized hardware-software co-design.",
+            techStack: ["C", "UDP Multicast", "Socket Programming", "Financial Systems"]
         },
         {
             name: "Predictive Content Analytics",
             period: "Jan ‘21 - May ‘21",
-            description: "Built a machine learning inference engine to predict virality and engagement metrics for digital content.",
-            problem: "Static content analysis lacks the predictive power needed for dynamic content recommendation and trend forecasting.",
-            approach: "Developed a Random Forest regression model trained on over 100k data points, incorporating feature engineering for audio-visual engagement indicators.",
-            outcome: "Achieved 91% prediction accuracy, providing actionable insights into content production strategies for streaming platforms.",
-            techStack: ["Python", "Scikit-learn", "MLOps", "Feature Engineering"]
+            description: "Built a predictive inference engine to forecast content engagement metrics, transforming raw data into directional business intelligence.",
+            problem: "Content strategy is often driven by intuition. I saw an opportunity to replace 'gut feeling' with 'data-backed' forecasts to optimize production spend and maximize audience engagement.",
+            approach: "Developed a robust Random Forest regression model with a custom feature engineering pipeline. I focused on extracting non-linear correlations between audio-visual metadata and historical virality patterns, ensuring the model's high generalizability across diverse media types.",
+            outcome: "Achieved 91% prediction accuracy, providing a strategic tool that allowed content producers to iterate on scripts and visual style with statistical confidence.",
+            techStack: ["Python", "Scikit-learn", "Statistical Modeling", "Feature Engineering"]
         },
         {
             name: "Enterprise Case Management",
             period: "July’20 – Dec’20",
-            description: "Architected a secure, RBAC-driven document management system for sensitive legal data.",
-            problem: "Legal document platforms require granular access control and end-to-end encryption to protect attorney-client privilege and meet stringent audit requirements.",
-            approach: "Implemented a zero-trust security model with column-level encryption, dynamic access policies, and a comprehensive audit logging system.",
-            outcome: "Successfully secured 10,000+ privileged files, passing all third-party security audits with zero findings.",
-            techStack: ["SQL", "RBAC", "Encryption", "Security Architecture"]
+            description: "Architected a zero-trust document security platform for high-sensitivity legal data, focusing on granular privacy and forensic auditability.",
+            problem: "Legal environments demand more than just 'access control'; they require mathematical proof of data integrity and air-tight privacy for attorney-client privileged communications.",
+            approach: "Implemented a multi-tenant architecture with column-level encryption (AES-256) and a dynamic Policy Enforcement Point (PEP). I built a non-repudiable audit log to track every access attempt, ensuring a complete forensic trail for every sensitive file.",
+            outcome: "Secured 10,000+ files and passed rigorous third-party security audits with zero findings, demonstrating a 'security-first' mindset in enterprise software design.",
+            techStack: ["SQL", "RBAC", "Zero Trust Architecture", "Security Auditing"]
         }
     ],
     education: [
