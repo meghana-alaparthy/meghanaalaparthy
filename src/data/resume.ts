@@ -73,7 +73,7 @@ export const resumeData = {
     projects: [
         {
             name: "High-Performance Search Engine",
-            period: "Sept ‘24 - Dec ‘24",
+            period: "Jan ‘25 - March ‘25",
             description: "Architected a full-text search engine utilizing a multi-threaded indexing pipeline to handle large-scale document retrieval with sub-millisecond precision.",
             problem: "Scaling full-text search requires moving beyond naive string matching. The challenge was maintaining a low memory profile while handling an ever-growing corpus of semi-structured data without hitting O(n) performance cliffs.",
             approach: "Engineered a custom Inverted Index and optimized Vector Space Model (TF-IDF). I leveraged Java NIO for high-throughput, non-blocking disk access and specialized hash maps to reduce garbage collection pressure—a decision driven by the need for deterministic latency in search-critical applications.",
@@ -82,7 +82,7 @@ export const resumeData = {
         },
         {
             name: "Distributed Log Aggregator",
-            period: "June ‘24 - Present",
+            period: "Jan ‘25 - Present",
             description: "Designed an enterprise-grade observability platform to unify telemetry across heterogeneous microservice environments, focusing on real-time incident diagnostics.",
             problem: "In a world of ephemeral microservices, fragmented logging is the primary bottleneck for reliability. I initiated this project to eliminate the 'blind spots' during production outages where logs are scattered across dozens of nodes.",
             approach: "Built a resilient ingestion pipeline using Kafka as a high-durability message backbone. I architected asynchronous C# workers to perform real-time stream enrichment before persistent storage in ElasticSearch, balancing write-heavy throughput with read-heavy search requirements.",
@@ -91,7 +91,7 @@ export const resumeData = {
         },
         {
             name: "PII Redaction Engine",
-            period: "Feb’23 – Apr’23",
+            period: "Jan ‘25 – Apr ‘25",
             description: "Developed an automated PII (Personally Identifiable Information) sanitization pipeline to enforce global data privacy compliance and prevent high-stakes data leaks.",
             problem: "Standard regex-based redaction is a fragile 'check-box' solution that misses contextual leaks. I wanted to build a system that *understands* data, reducing the liability of accidental exposure in unstructured feedback streams.",
             approach: "Fused NLP-based entity recognition with a high-performance Deterministic Finite Automaton (DFA) scanner. This hybrid approach allowed for the capture of complex PII (like addresses or custom IDs) while maintaining the sub-20ms latency required for real-time traffic interception.",
@@ -100,7 +100,7 @@ export const resumeData = {
         },
         {
             name: "Low-Latency Market Protocol",
-            period: "Oct’22 – Nov’22",
+            period: "Jan ‘25 – Feb ‘25",
             description: "Engineered a specialized multicast protocol for real-time financial data dissemination, optimizing for the ultra-low latency requirements of high-frequency systems.",
             problem: "Generic protocols like TCP introduce retransmission delays (jitter) that are unacceptable in high-stakes trading. The goal was to eliminate 'Head-of-Line' blocking and minimize the jitter variance that plagues financial networks.",
             approach: "Designed a custom UDP-based protocol with a lightweight, NACK-based reliability layer. I optimized for zero-copy memory transfers and prioritized packet throughput to ensure that all 100+ concurrent clients receive price-sensitive data within microseconds of each other.",
@@ -109,7 +109,7 @@ export const resumeData = {
         },
         {
             name: "Predictive Content Analytics",
-            period: "Jan ‘21 - May ‘21",
+            period: "Jan ‘25 - May ‘25",
             description: "Built a predictive inference engine to forecast content engagement metrics, transforming raw data into directional business intelligence.",
             problem: "Content strategy is often driven by intuition. I saw an opportunity to replace 'gut feeling' with 'data-backed' forecasts to optimize production spend and maximize audience engagement.",
             approach: "Developed a robust Random Forest regression model with a custom feature engineering pipeline. I focused on extracting non-linear correlations between audio-visual metadata and historical virality patterns, ensuring the model's high generalizability across diverse media types.",
@@ -118,7 +118,7 @@ export const resumeData = {
         },
         {
             name: "Enterprise Case Management",
-            period: "July’20 – Dec’20",
+            period: "Jan ‘25 – June ‘25",
             description: "Architected a zero-trust document security platform for high-sensitivity legal data, focusing on granular privacy and forensic auditability.",
             problem: "Legal environments demand more than just 'access control'; they require mathematical proof of data integrity and air-tight privacy for attorney-client privileged communications.",
             approach: "Implemented a multi-tenant architecture with column-level encryption (AES-256) and a dynamic Policy Enforcement Point (PEP). I built a non-repudiable audit log to track every access attempt, ensuring a complete forensic trail for every sensitive file.",
