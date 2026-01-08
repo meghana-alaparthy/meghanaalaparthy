@@ -73,11 +73,13 @@ export default function AboutPage() {
                     >
                         <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
                             <Briefcase className="w-6 h-6" />
-                            Architecting at Scale: The Paycom Chapter
+                            Architecting at Scale: The Paycom Journey
                         </h2>
                         <p className="text-lg text-muted-foreground leading-loose">
-                            Since joining Paycom in 2023, my focus has shifted from implementation to **system design and longevity**. I’ve been instrumental in dismantling monolithic legacy systems, replacing them with resilient, event-driven microservices that power our core payroll engine.
-                            Promotion to SDE III was a milestone that affirmed my commitment to not just writing code, but building infrastructure that survives traffic spikes and complex edge cases. I focus on observability, performance tuning, and cross-functional leadership to ensure our platforms are as stable as they are fast.
+                            My journey at Paycom began as a **Software Developer Intern**, where I first grappled with the complexities of enterprise-scale payroll data. That summer was pivotal; it transformed my academic understanding of distributed systems into the practical, high-stakes reality of processing millions of transactions.
+                        </p>
+                        <p className="text-lg text-muted-foreground leading-loose">
+                            Since returning full-time and progressing to **SDE III**, my focus has shifted from implementation to **system design and longevity**. I’ve been instrumental in dismantling monolithic legacy systems, replacing them with resilient, event-driven microservices that power our core payroll engine. Promotion was a milestone that affirmed my commitment to not just writing code, but building infrastructure that survives traffic spikes and complex edge cases.
                         </p>
                     </motion.div>
 

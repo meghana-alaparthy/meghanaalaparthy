@@ -15,7 +15,7 @@ export default function Home() {
                         <h2 className="text-2xl font-bold text-foreground">About Me</h2>
                         <p className="text-muted-foreground leading-relaxed">
                             I'm a <strong>Software Developer III at Paycom</strong> specializing in architecting high-scale distributed systems.
-                            My work centers on building the backbone of payroll and HR operations for millions of users,
+                            Currently targeting <strong>Senior (SDE IV)</strong> roles, I focus on building the backbone of payroll and HR operations for millions of users,
                             leveraging microservices, event-driven patterns with Kafka, and high-performance cloud infrastructure.
                         </p>
                         <Link href="/about" className="inline-flex items-center text-primary font-medium hover:underline">
@@ -24,7 +24,7 @@ export default function Home() {
 
                         <div className="flex flex-wrap gap-4 text-sm font-medium text-foreground/80 pt-2">
                             <span className="bg-secondary px-3 py-1 rounded-md flex items-center gap-1.5">
-                                <BadgeCheck size={14} className="text-blue-500" /> 3 Years Industry Exp.
+                                <BadgeCheck size={14} className="text-blue-500" /> Professional SDE III
                             </span>
                             <span className="bg-secondary px-3 py-1 rounded-md">📍 Dallas, TX</span>
                             <span className="bg-secondary px-3 py-1 rounded-md">🚀 Platform & Architecture</span>

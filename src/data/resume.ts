@@ -6,7 +6,7 @@ export const resumeData = {
         location: "Dallas, TX",
         linkedin: "https://www.linkedin.com/in/meghanaalaparthy/",
         github: "https://github.com/meghana-alaparthy",
-        role: "Software Developer (SDE III)"
+        role: "Software Developer III (SDE III / IV)"
     },
     summary: "As a Software Developer III at Paycom, I architect and scale distributed backend systems that manage mission-critical payroll and HR operations for millions of users. My expertise lies in high-performance microservices, event-driven architectures with Kafka, and building resilient, self-healing platforms. I focus on technical leadership, system observability, and driving architectural decisions that balance speed with long-term reliability.",
     skills: {
