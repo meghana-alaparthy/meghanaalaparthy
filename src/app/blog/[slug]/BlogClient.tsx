@@ -58,25 +58,25 @@ export default function BlogClient({ post }: BlogClientProps) {
     const socialLinks = [
         {
             name: "LinkedIn",
-            icon: <Linkedin size={20} />,
+            icon: Linkedin,
             url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
             color: "hover:bg-[#0077b5]"
         },
         {
             name: "X",
-            icon: <Twitter size={20} />,
+            icon: Twitter,
             url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`,
             color: "hover:bg-black"
         },
         {
             name: "WhatsApp",
-            icon: <Send size={20} />,
+            icon: Send,
             url: `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + " " + shareUrl)}`,
             color: "hover:bg-[#25D366]"
         },
         {
             name: "Instagram",
-            icon: <Instagram size={20} />,
+            icon: Instagram,
             url: `https://www.instagram.com/`,
             color: "hover:bg-[#E1306C]"
         }
@@ -111,7 +111,7 @@ export default function BlogClient({ post }: BlogClientProps) {
                                     className={`p-4 rounded-xl bg-secondary/50 text-muted-foreground transition-all duration-300 transform hover:scale-110 hover:text-white ${link.color} shadow-sm border border-border/50`}
                                     title={`Share on ${link.name}`}
                                 >
-                                    {link.icon}
+                                    <link.icon size={20} />
                                 </a>
                             ))}
                         </div>
@@ -234,7 +234,7 @@ export default function BlogClient({ post }: BlogClientProps) {
                                 <div className="flex gap-3">
                                     {socialLinks.slice(0, 2).map(link => (
                                         <a key={link.name} href={link.url} className="p-2 rounded-lg bg-white/50 border border-border hover:bg-white hover:text-primary transition-colors">
-                                            {React.cloneElement(link.icon as React.ReactElement, { size: 16 })}
+                                            <link.icon size={16} />
                                         </a>
                                     ))}
                                 </div>
