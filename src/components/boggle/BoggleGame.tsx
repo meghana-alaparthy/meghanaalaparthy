@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { BoggleSolver } from '@/lib/boggle/BoggleSolver';
 import { QRCodeSVG } from 'qrcode.react';
-import { Timer, Trophy, Share2, Play, RotateCcw, X, Info } from 'lucide-react';
+import { Timer, Trophy, Share2, Play, RotateCcw, X, Info, Crown, History } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DICE = [
@@ -11,6 +11,12 @@ const DICE = [
     "DISTTY", "EIOSST", "DELRVY", "ACHOPS", "HIMNQU", "EEINSU",
     "EEGHNW", "AFFKPS", "HLNNRZ", "DEILRX"
 ];
+
+interface LeaderboardEntry {
+    name: string;
+    score: number;
+    date: string;
+}
 
 const BoggleGame: React.FC = () => {
     const [grid, setGrid] = useState<string[]>(Array(16).fill(''));
@@ -25,13 +31,29 @@ const BoggleGame: React.FC = () => {
     const [showQR, setShowQR] = useState(false);
     const [shareUrl, setShareUrl] = useState('');
 
+    // Swipe Interaction States
+    const [currentPath, setCurrentPath] = useState<number[]>([]);
+    const [isDragging, setIsDragging] = useState(false);
+    const gridRef = useRef<HTMLDivElement>(null);
+    const cellsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+    // Leaderboard State
+    const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+    const [playerName, setPlayerName] = useState('');
+    const [hasSubmittedScore, setHasSubmittedScore] = useState(false);
+
     const solverRef = useRef<BoggleSolver>(new BoggleSolver());
     const timerRef = useRef<NodeJS.Timeout>(null);
 
+    // Initialize
     useEffect(() => {
         const load = async () => {
             await solverRef.current.loadDictionary('/boggle/assets/dictionary.txt');
             setIsLoaded(true);
+
+            // Load Leaderboard
+            const saved = localStorage.getItem('boggle_leaderboard');
+            if (saved) setLeaderboard(JSON.parse(saved));
 
             // Check URL for board
             const urlParams = new URLSearchParams(window.location.search);
@@ -58,12 +80,16 @@ const BoggleGame: React.FC = () => {
         setTimeRemaining(120);
         setWordInput('');
         setShowResults(false);
+        setHasSubmittedScore(false);
         generateRandomGrid();
+        setCurrentPath([]);
     };
 
     const endGame = useCallback(() => {
         setGameActive(false);
         setShowResults(true);
+        setIsDragging(false);
+        setCurrentPath([]);
         if (timerRef.current) clearInterval(timerRef.current);
 
         const allPossible = solverRef.current.solve(grid);
@@ -84,20 +110,93 @@ const BoggleGame: React.FC = () => {
         };
     }, [gameActive, timeRemaining, endGame]);
 
-    const handleSubmit = (e?: React.FormEvent) => {
-        e?.preventDefault();
-        const word = wordInput.trim().toLowerCase();
-        setWordInput('');
-
-        if (word.length < 3 || foundWords.has(word)) return;
+    const submitWord = (word: string) => {
+        const normalized = word.trim().toLowerCase();
+        if (normalized.length < 3 || foundWords.has(normalized)) return;
 
         const allWords = solverRef.current.solve(grid);
-        const match = allWords.find(w => w.word === word);
+        const match = allWords.find(w => w.word === normalized);
 
         if (match) {
-            setFoundWords(prev => new Set([...prev, word]));
+            setFoundWords(prev => new Set([...prev, normalized]));
             setScore(prev => prev + match.score);
+            return true;
         }
+        return false;
+    };
+
+    const handleSubmitInput = (e?: React.FormEvent) => {
+        e?.preventDefault();
+        submitWord(wordInput);
+        setWordInput('');
+    };
+
+    // --- SWIPE LOGIC ---
+
+    const isAdjacent = (idx1: number, idx2: number) => {
+        const r1 = Math.floor(idx1 / 4);
+        const c1 = idx1 % 4;
+        const r2 = Math.floor(idx2 / 4);
+        const c2 = idx2 % 4;
+        return Math.abs(r1 - r2) <= 1 && Math.abs(c1 - c2) <= 1;
+    };
+
+    const startPath = (index: number) => {
+        if (!gameActive) return;
+        setIsDragging(true);
+        setCurrentPath([index]);
+        if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+            window.navigator.vibrate(10);
+        }
+    };
+
+    const extendPath = (index: number) => {
+        if (!isDragging || currentPath.includes(index)) return;
+        const last = currentPath[currentPath.length - 1];
+        if (isAdjacent(last, index)) {
+            setCurrentPath(prev => [...prev, index]);
+            if (typeof window !== 'undefined' && window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(5);
+            }
+        }
+    };
+
+    const finalizePath = () => {
+        if (!isDragging) return;
+        setIsDragging(false);
+        if (currentPath.length >= 3) {
+            const word = currentPath.map(i => grid[i]).join('');
+            submitWord(word);
+        }
+        setCurrentPath([]);
+    };
+
+    // Touch Handling (elementFromPoint is needed because touchmove doesn't trigger enter/exit)
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        const element = document.elementFromPoint(touch.clientX, touch.clientY) as HTMLElement;
+        const cellIndex = element?.getAttribute('data-cell-index');
+        if (cellIndex !== null && cellIndex !== undefined) {
+            extendPath(parseInt(cellIndex));
+        }
+    };
+
+    // --- LEADERBOARD LOGIC ---
+    const submitToLeaderboard = () => {
+        if (!playerName.trim()) return;
+        const newEntry: LeaderboardEntry = {
+            name: playerName,
+            score: score,
+            date: new Date().toLocaleDateString()
+        };
+        const newLeaderboard = [...leaderboard, newEntry]
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 10);
+
+        setLeaderboard(newLeaderboard);
+        localStorage.setItem('boggle_leaderboard', JSON.stringify(newLeaderboard));
+        setHasSubmittedScore(true);
     };
 
     const handleShare = () => {
@@ -111,16 +210,16 @@ const BoggleGame: React.FC = () => {
         return (
             <div className="flex flex-col items-center justify-center min-h-[400px]">
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
-                <p className="mt-4 text-gray-600 font-medium">Loading Dictionary...</p>
+                <p className="mt-4 text-gray-600 font-medium">Initializing Boggle Engine...</p>
             </div>
         );
     }
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+        <div className="max-w-md mx-auto p-6 bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 mb-12 select-none">
             <header className="text-center mb-8">
                 <h1 className="text-4xl font-black text-indigo-600 tracking-tight">BOGGLE</h1>
-                <p className="text-gray-500 font-medium">Can you find all the words?</p>
+                <p className="text-gray-500 font-medium">Swipe over letters to form words</p>
             </header>
 
             <div className="flex justify-between items-center mb-6 px-2">
@@ -147,92 +246,149 @@ const BoggleGame: React.FC = () => {
                 <button
                     onClick={handleShare}
                     className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold p-3 rounded-2xl transition-all"
-                    title="Share & Play on Mobile"
+                    title="Share with Friends"
                 >
                     <Share2 className="w-6 h-6" />
                 </button>
             </div>
 
-            <div className="grid grid-cols-4 gap-3 mb-8">
+            {/* INTERACTIVE GRID */}
+            <div
+                ref={gridRef}
+                className="grid grid-cols-4 gap-3 mb-8 relative touch-none"
+                onMouseLeave={finalizePath}
+                onMouseUp={finalizePath}
+                onTouchEnd={finalizePath}
+                onTouchMove={handleTouchMove}
+            >
                 {grid.map((char, i) => (
-                    <motion.div
+                    <div
                         key={i}
-                        whileHover={gameActive ? { scale: 1.05 } : {}}
-                        className={`aspect-square flex items-center justify-center text-2xl font-black rounded-xl border-2 shadow-sm
-                            ${gameActive ? 'bg-white border-indigo-100 text-indigo-900' : 'bg-gray-50 border-gray-200 text-gray-400 opacity-50'}`}
+                        data-cell-index={i}
+                        onMouseDown={() => startPath(i)}
+                        onMouseEnter={() => extendPath(i)}
+                        onTouchStart={() => startPath(i)}
+                        className={`aspect-square flex items-center justify-center text-2xl font-black rounded-xl border-2 transition-all duration-200
+                            ${currentPath.includes(i)
+                                ? 'bg-indigo-600 border-indigo-700 text-white scale-95 shadow-inner'
+                                : gameActive
+                                    ? 'bg-white border-indigo-100 text-indigo-900 shadow-sm'
+                                    : 'bg-gray-50 border-gray-100 text-gray-400 opacity-50'}`}
                     >
                         {char.toUpperCase()}
-                    </motion.div>
+                    </div>
                 ))}
+
+                {/* Visual Path Display (The Current Word Being Formed) */}
+                <div className="absolute -top-10 left-0 right-0 text-center pointer-events-none">
+                    <AnimatePresence mode="wait">
+                        {currentPath.length > 0 && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                className="bg-indigo-600 text-white px-4 py-1 rounded-full text-lg font-black tracking-widest inline-block shadow-lg"
+                            >
+                                {currentPath.map(i => grid[i]).join('').toUpperCase()}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
-                <input
-                    type="text"
-                    value={wordInput}
-                    onChange={(e) => setWordInput(e.target.value)}
-                    disabled={!gameActive}
-                    placeholder={gameActive ? "Type word..." : "Start game to play"}
-                    className="flex-1 bg-gray-50 border-2 border-gray-100 rounded-2xl px-5 py-3 font-bold text-lg focus:border-indigo-500 focus:outline-none disabled:cursor-not-allowed transition-colors"
-                />
-                <button
-                    disabled={!gameActive || wordInput.length < 3}
-                    className="bg-indigo-600 disabled:bg-gray-200 text-white font-bold px-6 py-3 rounded-2xl shadow-md transition-all whitespace-nowrap"
-                >
-                    Submit
-                </button>
-            </form>
-
-            <div className="flex flex-wrap gap-2 min-h-[100px] content-start overflow-y-auto max-h-[150px] p-2 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+            <div className="flex flex-wrap gap-2 min-h-[100px] content-start overflow-y-auto max-h-[150px] p-4 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-200">
                 <AnimatePresence>
                     {Array.from(foundWords).map(word => (
                         <motion.span
                             key={word}
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-bold border border-green-200"
+                            className="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-bold border border-green-200 uppercase"
                         >
                             {word}
                         </motion.span>
                     ))}
                 </AnimatePresence>
                 {foundWords.size === 0 && (
-                    <p className="text-gray-400 text-sm font-medium m-auto">No words found yet</p>
+                    <p className="text-gray-400 text-sm font-medium m-auto lowercase">Waiting for first word...</p>
                 )}
             </div>
 
-            {/* Results Modal */}
+            {/* Results & Leaderboard Modal */}
             <AnimatePresence>
                 {showResults && (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        className="mt-8 p-6 bg-indigo-900 text-white rounded-3xl"
+                        className="fixed inset-0 bg-black/80 backdrop-blur-md z-[60] flex items-center justify-center p-6 overflow-y-auto"
                     >
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-2xl font-bold text-white">Game Over!</h2>
-                            <span className="bg-indigo-600 px-4 py-1 rounded-full text-sm font-bold">Score: {score}</span>
-                        </div>
-                        <p className="text-indigo-200 text-sm mb-4">You found {foundWords.size} words.</p>
+                        <div className="bg-white rounded-[3rem] p-10 max-w-sm w-full relative max-h-[90vh] overflow-y-auto">
+                            <button
+                                onClick={() => setShowResults(false)}
+                                className="absolute top-6 right-6 p-2 bg-gray-100 rounded-full"
+                            >
+                                <X className="w-5 h-5 text-gray-500" />
+                            </button>
 
-                        <div className="max-h-[200px] overflow-y-auto pr-2 custom-scrollbar">
-                            <h3 className="text-indigo-300 text-xs font-black tracking-widest uppercase mb-2">Missed Words</h3>
-                            <div className="grid grid-cols-2 gap-2">
-                                {missedWords.slice(0, 20).map(m => (
-                                    <div key={m.word} className="flex justify-between text-sm opacity-80">
-                                        <span>{m.word}</span>
-                                        <span className="font-mono">{m.score}</span>
+                            <div className="text-center mb-8">
+                                <Crown className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+                                <h2 className="text-3xl font-black text-gray-900 tracking-tight">Game Over!</h2>
+                                <div className="text-5xl font-black text-indigo-600 my-4">{score}</div>
+                                <p className="text-gray-500">You found {foundWords.size} words.</p>
+                            </div>
+
+                            {/* Score Submission */}
+                            {!hasSubmittedScore && (
+                                <div className="bg-indigo-50 p-6 rounded-3xl mb-8 border border-indigo-100 shadow-inner">
+                                    <h3 className="text-sm font-black text-indigo-900 uppercase tracking-widest mb-4">Submit Score</h3>
+                                    <div className="flex gap-2">
+                                        <input
+                                            type="text"
+                                            value={playerName}
+                                            onChange={(e) => setPlayerName(e.target.value)}
+                                            placeholder="Your Name"
+                                            className="flex-1 px-4 py-3 rounded-xl border-2 border-indigo-200 focus:border-indigo-500 outline-none font-bold"
+                                        />
+                                        <button
+                                            onClick={submitToLeaderboard}
+                                            className="bg-indigo-600 text-white font-bold px-4 py-3 rounded-xl hover:bg-indigo-700 transition-colors"
+                                        >
+                                            Submit
+                                        </button>
                                     </div>
-                                ))}
-                                {missedWords.length > 20 && <div className="text-xs italic opacity-50">+{missedWords.length - 20} more...</div>}
+                                </div>
+                            )}
+
+                            {/* LEADERBOARD TABLE */}
+                            <div className="space-y-4">
+                                <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] flex items-center gap-2">
+                                    <History size={14} /> Friend Leaderboard
+                                </h3>
+                                <div className="space-y-2">
+                                    {leaderboard.map((entry, i) => (
+                                        <div key={i} className={`flex justify-between items-center p-3 rounded-xl border ${i === 0 ? 'bg-yellow-50 border-yellow-200 shadow-sm' : 'bg-gray-50 border-gray-100'}`}>
+                                            <div className="flex items-center gap-3">
+                                                <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black ${i === 0 ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                                                    {i + 1}
+                                                </span>
+                                                <span className="font-bold text-gray-800">{entry.name}</span>
+                                            </div>
+                                            <div className="flex flex-col items-end">
+                                                <span className="font-black text-indigo-600">{entry.score}</span>
+                                                <span className="text-[8px] text-gray-400 uppercase">{entry.date}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    {leaderboard.length === 0 && <p className="text-gray-400 text-sm text-center py-4">Be the first to set a record!</p>}
+                                </div>
                             </div>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            {/* QR Code Modal */}
+            {/* QR Code Modal (Unchanged) */}
             <AnimatePresence>
                 {showQR && (
                     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-6">
@@ -253,22 +409,19 @@ const BoggleGame: React.FC = () => {
                                     <Share2 className="w-8 h-8 text-indigo-600" />
                                 </div>
                                 <h3 className="text-2xl font-black text-gray-900 mb-2">Scan & Play</h3>
-                                <p className="text-gray-500">Scan this code with your phone to play this exact board!</p>
+                                <p className="text-gray-500">Share this with friends to compete on the same board!</p>
                             </div>
                             <div className="bg-white p-6 rounded-3xl border-4 border-indigo-50 inline-block mb-6 shadow-xl">
                                 <QRCodeSVG value={shareUrl} size={200} includeMargin={true} />
                             </div>
-                            <div className="flex gap-3">
-                                <button
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(shareUrl);
-                                        // Optional: toast notification
-                                    }}
-                                    className="flex-1 bg-indigo-600 text-white font-bold py-3 rounded-2xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200"
-                                >
-                                    Copy Link
-                                </button>
-                            </div>
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(shareUrl);
+                                }}
+                                className="w-full bg-indigo-600 text-white font-bold py-3 rounded-2xl shadow-lg"
+                            >
+                                Copy Link
+                            </button>
                         </motion.div>
                     </div>
                 )}
