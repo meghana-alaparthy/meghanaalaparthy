@@ -6,8 +6,6 @@ excerpt: A deep dive into how I diagnosed and fixed a consumer lag issue that th
 tags: ["Messaging", "Performance", "Debugging", "SRE"]
 ---
 
-## The Symptoms
-Our 'Reporting' service started lagging 2 hours behind real-time. The consumer group was rebalancing constantly.
 
 ## Root Cause Analysis
 Using **Prometheus and Grafana**, we identified that one partition was receiving 80% of the traffic due to a poor partition key strategy (TenantID).

@@ -6,8 +6,6 @@ excerpt: How we optimized a legacy Java-based payroll system to reduce processin
 tags: ["Java", "System Design", "Performance", "Best for Interview Prep"]
 ---
 
-## The Challenge
-Our payroll system was struggling to meet SLAs as the user base grew. Processing 1 million records was taking over 6 hours, risking delayed payments.
 
 ## Optimization Strategy
 We identified bottlenecks in database I/O and sequential processing. The solution involved:

@@ -6,8 +6,6 @@ excerpt: How I implemented the Saga pattern to manage distributed consistency ac
 tags: ["System Design", "Event Driven", "Microservices", "Distributed Systems"]
 ---
 
-## The Consistency Challenge
-Moving from a monolith to microservices introduced the classic 'Dual Write' problem. We needed to update the 'Payroll' and 'Benefits' databases atomically.
 
 ## Solution: The Saga Pattern
 I chose an **Orchestration-based Saga** using an asynchronous event bus. A central 'Saga Orchestrator' service managed the state of each transaction.
