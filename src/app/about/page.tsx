@@ -54,7 +54,7 @@ export default function AboutPage() {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
+                        <h2 className="text-3xl font-bold text-indigo-600 flex items-center gap-3">
                             <Globe className="w-6 h-6" />
                             From Vision to Production
                         </h2>
@@ -73,7 +73,7 @@ export default function AboutPage() {
                         viewport={{ once: true }}
                         className="space-y-6"
                     >
-                        <h2 className="text-3xl font-bold text-primary flex items-center gap-3">
+                        <h2 className="text-3xl font-bold text-indigo-600 flex items-center gap-3">
                             <Briefcase className="w-6 h-6" />
                             Work at Paycom
                         </h2>
@@ -99,7 +99,7 @@ export default function AboutPage() {
                     </motion.div>
 
                     <div className="text-center pt-8">
-                        <Link href="/resume" className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-primary text-white font-medium hover:bg-primary/90 transition-all shadow-md hover:shadow-lg">
+                        <Link href="/resume" className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg">
                             View Full Resume <ArrowRight className="ml-2 w-5 h-5" />
                         </Link>
                     </div>

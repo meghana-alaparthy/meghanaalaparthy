@@ -89,14 +89,6 @@ export function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-8 border-t border-indigo-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-                    <p>© {currentYear} Meghana Alaparthy. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        <span>Built with Next.js 16</span>
-                        <span>Tailwind CSS</span>
-                        <span>Deployed on Cloudflare</span>
-                    </div>
-                </div>
             </div>
         </footer>
     );
