@@ -30,9 +30,6 @@ export function Hero() {
                     <span className="px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-6 inline-block">
                         Software Developer III
                     </span>
-                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-b from-slate-900 to-slate-600 bg-clip-text text-transparent">
-                        {resumeData.personalInfo.name}
-                    </h1>
 
 
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-4">
