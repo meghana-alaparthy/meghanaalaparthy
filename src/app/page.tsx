@@ -26,6 +26,7 @@ export default function Home() {
                                 <BadgeCheck size={14} className="text-blue-500" /> Professional SDE III
                             </span>
                             <span className="bg-secondary px-3 py-1 rounded-md">📍 Dallas, TX</span>
+                            <span className="bg-secondary px-3 py-1 rounded-md">⚙️ Platform & Architecture</span>
                         </div>
                     </div>
                     <div className="space-y-6">

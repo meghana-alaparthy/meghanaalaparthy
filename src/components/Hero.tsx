@@ -31,6 +31,9 @@ export function Hero() {
                         Software Developer III
                     </span>
 
+                    <h1 className="text-4xl md:text-6xl font-mono font-semibold tracking-tighter mb-6 text-slate-900">
+                        {resumeData.personalInfo.name}
+                    </h1>
 
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-4">
                         I'm looking for <strong>Senior/Staff SWE (SDE III/IV) roles</strong> where I can work on complex distributed systems.
@@ -46,7 +49,7 @@ export function Hero() {
                     {/* Primary CTA */}
                     <a
                         href="/Meghana_Alaparthy_Resume.pdf"
-                        className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-primary text-white text-lg font-semibold hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 ring-offset-2 focus-visible:ring-2"
+                        className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-indigo-600 text-white text-lg font-semibold hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-200 hover:scale-105 active:scale-95 ring-offset-2 focus-visible:ring-2"
                     >
                         <FileText size={22} />
                         View Full Resume
