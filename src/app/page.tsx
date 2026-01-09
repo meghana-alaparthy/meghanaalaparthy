@@ -111,10 +111,6 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Footer */}
-            <footer className="py-12 text-center text-muted-foreground text-sm border-t border-border bg-background">
-                <p>© {new Date().getFullYear()} Meghana Alaparthy. Built with Next.js & Tailwind.</p>
-            </footer>
         </main>
     );
 }
