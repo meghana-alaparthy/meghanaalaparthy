@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/db';
 import BoggleRoom from '@/models/BoggleRoom';
 
