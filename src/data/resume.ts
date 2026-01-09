@@ -8,7 +8,7 @@ export const resumeData = {
         github: "https://github.com/meghana-alaparthy",
         role: "Software Developer III (SDE III / IV)"
     },
-    summary: "As a Software Developer III at Paycom, I architect and scale distributed backend systems that manage mission-critical payroll and HR operations for millions of users. My expertise lies in high-performance microservices, event-driven architectures with Kafka, and building resilient, self-healing platforms. I focus on technical leadership, system observability, and driving architectural decisions that balance speed with long-term reliability.",
+    summary: "Software Developer III at Paycom, focused on backend architecture and distributed systems. I work on breaking down monolithic applications into event-driven microservices to improve reliability and scale. My day-to-day involves seeing features through from initial design to production, ensuring they are observable, resilient, and performant.",
     skills: {
         languages: ["C#", "Python", "Java", "JavaScript", "TypeScript", "SQL", "PHP"],
         frameworks: ["React", "HTML/CSS", "RESTful APIs", "Spring Boot"],
@@ -35,11 +35,11 @@ export const resumeData = {
                 }
             ],
             highlights: [
-                "Spearheaded the architectural migration of our legacy monolithic payroll engine into a suite of 12 decoupled microservices, implementing Domain-Driven Design (DDD) to achieve a throughput of 2M+ transactions daily.",
-                "Orchestrated distributed transaction management using the Saga pattern, ensuring eventual consistency across payroll and benefits modules while maintaining a 99.99% system availability.",
-                "Engineered cross-system performance optimizations, reducing critical API latency by 60% (500ms to 200ms) through the implementation of async event-streaming and high-availability Redis caching layers.",
-                "Designed and implemented a modular resilience framework utilizing advanced circuit breakers and intelligent retry policies, effectively eliminating cascading failures during high-traffic payroll cycles.",
-                "Standardized our containerization strategy using Docker/Kubernetes and architected an automated CI/CD pipeline that streamlined deployments, reducing lead time from hours to 15 minutes."
+                "Transformed a legacy monolithic payroll engine into 12 separate microservices using Domain-Driven Design, enabling the system to reliably handle over 2 million transactions daily.",
+                "Implemented eventual consistency across payroll and benefits modules using the Saga pattern, significantly improving system reliability during high-load periods.",
+                "Optimized API performance by introducing async event streaming and Redis caching, cutting critical endpoint latency from ~500ms to under 200ms.",
+                "Built a circuit breaker and retry framework that prevents cascading failures during payroll processing spikes.",
+                "Standardized Docker and Kubernetes workflows for our team, helping granularize deployments and reducing the lead time for fixes from hours to about 15 minutes."
             ]
         },
         {
@@ -52,8 +52,8 @@ export const resumeData = {
                 }
             ],
             highlights: [
-                "Assisted in teaching undergraduate courses: “Introduction to Programming for Non-Programmers” and “Introduction to Programming for Programmers.”",
-                "Conducted lab sessions, graded assignments, and provided one-on-one support to over 100 students each semester."
+                "Taught introductory programming courses to both CS majors and non-majors.",
+                "Managed lab sessions and grading for over 100 students, helping them grasp core concepts like data structures and algorithms."
             ]
         },
         {
@@ -66,7 +66,7 @@ export const resumeData = {
                 }
             ],
             highlights: [
-                "Worked on Service Fabric using Azure Services Platform to manage microservice applications."
+                "Worked with the Azure Services Platform to help manage early microservice deployments."
             ]
         }
     ],
@@ -74,56 +74,50 @@ export const resumeData = {
         {
             name: "High-Performance Search Engine",
             period: "Jan ‘25 - March ‘25",
-            description: "Architected a full-text search engine utilizing a multi-threaded indexing pipeline to handle large-scale document retrieval with sub-millisecond precision.",
-            problem: "Scaling full-text search requires moving beyond naive string matching. The challenge was maintaining a low memory profile while handling an ever-growing corpus of semi-structured data without hitting O(n) performance cliffs.",
-            approach: "Engineered a custom Inverted Index and optimized Vector Space Model (TF-IDF). I leveraged Java NIO for high-throughput, non-blocking disk access and specialized hash maps to reduce garbage collection pressure—a decision driven by the need for deterministic latency in search-critical applications.",
-            outcome: "Achieved sub-10ms search latency across 250k+ documents, demonstrating a deep mastery of data structures and memory-efficient algorithm design.",
-            techStack: ["Java", "NIO", "Information Retrieval", "Algorithm Design"]
+            description: "A custom multi-threaded search engine designed for efficiency.",
+            details: "Built a full-text search backend using a custom Inverted Index and Vector Space Model (TF-IDF). I avoided off-the-shelf solutions to better understand the low-level challenges of memory management and disk I/O. By using Java NIO, I was able to achieve sub-10ms query times on a dataset of 250k+ documents without the overhead of a heavy search framework.",
+            outcome: "Sub-10ms search latency across 250k+ documents.",
+            techStack: ["Java", "NIO", "Algorithms"]
         },
         {
             name: "Distributed Log Aggregator",
             period: "Jan ‘25 - Present",
-            description: "Designed an enterprise-grade observability platform to unify telemetry across heterogeneous microservice environments, focusing on real-time incident diagnostics.",
-            problem: "In a world of ephemeral microservices, fragmented logging is the primary bottleneck for reliability. I initiated this project to eliminate the 'blind spots' during production outages where logs are scattered across dozens of nodes.",
-            approach: "Built a resilient ingestion pipeline using Kafka as a high-durability message backbone. I architected asynchronous C# workers to perform real-time stream enrichment before persistent storage in ElasticSearch, balancing write-heavy throughput with read-heavy search requirements.",
-            outcome: "Capable of processing 50,000+ events per second, effectively reducing Mean Time to Resolution (MTTR) by providing a single, searchable source of truth for the entire engineering organization.",
-            techStack: ["Kafka", "C#", "ElasticSearch", "Redis", "Distributed Systems"]
+            description: "A centralized logging system to make debugging microservices easier.",
+            details: "Debugging across multiple services was becoming a pain point, so I built a pipeline to consolidate logs. It uses Kafka to buffer incomplete logs and asynchronous C# workers to enrich them before indexing in ElasticSearch. This setup ensures that we don't lose diagnostic data even if the storage layer momentarily slows down.",
+            outcome: "Handles 50k+ events/sec and simplified cross-service debugging.",
+            techStack: ["Kafka", "C#", "ElasticSearch", "Redis"]
         },
         {
             name: "PII Redaction Engine",
             period: "Jan ‘25 – Apr ‘25",
-            description: "Developed an automated PII (Personally Identifiable Information) sanitization pipeline to enforce global data privacy compliance and prevent high-stakes data leaks.",
-            problem: "Standard regex-based redaction is a fragile 'check-box' solution that misses contextual leaks. I wanted to build a system that *understands* data, reducing the liability of accidental exposure in unstructured feedback streams.",
-            approach: "Fused NLP-based entity recognition with a high-performance Deterministic Finite Automaton (DFA) scanner. This hybrid approach allowed for the capture of complex PII (like addresses or custom IDs) while maintaining the sub-20ms latency required for real-time traffic interception.",
-            outcome: "Successfully reduced sensitive data exposure by 40%, proving that security and performance can coexist through smart architectural choices.",
-            techStack: ["Python", "NLTK", "DFA Optimization", "Security Engineering"]
+            description: "Automated privacy filtering for unstructured text streams.",
+            details: "We needed a way to strip sensitive user data from our analytics pipelines. I combined NLP entity recognition with a fast DFA scanner to catch patterns like addresses and social security numbers. This hybrid approach catches context-specific PII that simple regex often misses, while keeping processing overhead low enough for real-time streams.",
+            outcome: "Reduced accidental data exposure in logs by roughly 40%.",
+            techStack: ["Python", "NLTK", "DFA"]
         },
         {
             name: "Low-Latency Market Protocol",
             period: "Jan ‘25 – Feb ‘25",
-            description: "Engineered a specialized multicast protocol for real-time financial data dissemination, optimizing for the ultra-low latency requirements of high-frequency systems.",
-            problem: "Generic protocols like TCP introduce retransmission delays (jitter) that are unacceptable in high-stakes trading. The goal was to eliminate 'Head-of-Line' blocking and minimize the jitter variance that plagues financial networks.",
-            approach: "Designed a custom UDP-based protocol with a lightweight, NACK-based reliability layer. I optimized for zero-copy memory transfers and prioritized packet throughput to ensure that all 100+ concurrent clients receive price-sensitive data within microseconds of each other.",
-            outcome: "Reduced one-way latency to <50 microseconds per hop, achieving a performance tier normally reserved for specialized hardware-software co-design.",
-            techStack: ["C", "UDP Multicast", "Socket Programming", "Financial Systems"]
+            description: "A lightweight UDP multicast protocol for financial data.",
+            details: "TCP retransmission delays were creating too much jitter for a trading simulation project. I wrote a custom UDP protocol from scratch, implementing a lightweight feedback loop for dropped packets (NACK-based). This removed head-of-line blocking and kept latency variance low for connected clients.",
+            outcome: "Consistent <50µs one-way latency on local networks.",
+            techStack: ["C", "UDP Multicast", "Socket Programming"]
         },
         {
             name: "Predictive Content Analytics",
             period: "Jan ‘25 - May ‘25",
-            description: "Built a predictive inference engine to forecast content engagement metrics, transforming raw data into directional business intelligence.",
-            problem: "Content strategy is often driven by intuition. I saw an opportunity to replace 'gut feeling' with 'data-backed' forecasts to optimize production spend and maximize audience engagement.",
-            approach: "Developed a robust Random Forest regression model with a custom feature engineering pipeline. I focused on extracting non-linear correlations between audio-visual metadata and historical virality patterns, ensuring the model's high generalizability across diverse media types.",
-            outcome: "Achieved 91% prediction accuracy, providing a strategic tool that allowed content producers to iterate on scripts and visual style with statistical confidence.",
-            techStack: ["Python", "Scikit-learn", "Statistical Modeling", "Feature Engineering"]
+            description: "Forecasting engagement based on content metadata.",
+            details: "I wanted to see if we could predict how well a piece of content would perform before publishing. I built a Random Forest model that looks at historical metadata to forecast engagement. It's not perfect, but it gives our content team a statistical baseline to test their assumptions against.",
+            outcome: "Achieved ~91% accuracy on historical test data.",
+            techStack: ["Python", "Scikit-learn", "Data Science"]
         },
         {
             name: "Enterprise Case Management",
             period: "Jan ‘25 – June ‘25",
-            description: "Architected a zero-trust document security platform for high-sensitivity legal data, focusing on granular privacy and forensic auditability.",
-            problem: "Legal environments demand more than just 'access control'; they require mathematical proof of data integrity and air-tight privacy for attorney-client privileged communications.",
-            approach: "Implemented a multi-tenant architecture with column-level encryption (AES-256) and a dynamic Policy Enforcement Point (PEP). I built a non-repudiable audit log to track every access attempt, ensuring a complete forensic trail for every sensitive file.",
-            outcome: "Secured 10,000+ files and passed rigorous third-party security audits with zero findings, demonstrating a 'security-first' mindset in enterprise software design.",
-            techStack: ["SQL", "RBAC", "Zero Trust Architecture", "Security Auditing"]
+            description: "Secure document handling for legal datasets.",
+            details: "Security was the priority here. I architected a system with column-level encryption and a strict audit log for every read activity. The goal was to ensure non-repudiation—meaning there's a cryptographic proof for every file access, which is critical for legal compliance.",
+            outcome: "Passed security audits with zero critical findings.",
+            techStack: ["SQL", "Security", "Encryption"]
         }
     ],
     education: [
@@ -143,8 +137,8 @@ export const resumeData = {
         }
     ],
     achievements: [
-        "Logical and analytical Thinking: Completed all the puzzles at puzzle day by Harvard CS50 in a group.",
-        "Yoga: Women National Yogasanas Championship, Winner in several district and state yoga competitions.",
-        "Leadership: Hostel Representative, Shiv Nadar University. (2017-2019)"
+        "Completed all puzzles at Harvard CS50's Puzzle Day (Group).",
+        "Winner in several district and state-level Yoga championships.",
+        "Hostel Representative at Shiv Nadar University (2017-2019)."
     ]
 };

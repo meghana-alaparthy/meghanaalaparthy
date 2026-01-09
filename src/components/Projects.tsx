@@ -50,24 +50,6 @@ export function Projects() {
                                 ))}
                             </div>
 
-                            <div className="space-y-3 text-sm text-muted-foreground flex-grow">
-                                {project.problem && (
-                                    <div>
-                                        <span className="font-semibold text-foreground">Problem:</span> {project.problem}
-                                    </div>
-                                )}
-                                {project.approach && (
-                                    <div>
-                                        <span className="font-semibold text-foreground">Approach:</span> {project.approach}
-                                    </div>
-                                )}
-                                {project.outcome && (
-                                    <div>
-                                        <span className="font-semibold text-foreground">Outcome:</span> {project.outcome}
-                                    </div>
-                                )}
-                                {!project.problem && <p>{project.description}</p>}
-                            </div>
                         </motion.div>
                     ))}
                 </div>

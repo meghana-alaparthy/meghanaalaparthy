@@ -13,11 +13,6 @@ export default function Home() {
                 <div className="container max-w-5xl mx-auto grid md:grid-cols-3 gap-12">
                     <div className="md:col-span-2 space-y-6">
                         <h2 className="text-2xl font-bold text-foreground">About Me</h2>
-                        <p className="text-muted-foreground leading-relaxed">
-                            I'm a <strong>Software Developer III at Paycom</strong> specializing in architecting high-scale distributed systems.
-                            Currently targeting <strong>Senior (SDE IV)</strong> roles, I focus on building the backbone of payroll and HR operations for millions of users,
-                            leveraging microservices, event-driven patterns with Kafka, and high-performance cloud infrastructure.
-                        </p>
                         <Link href="/about" className="inline-flex items-center text-primary font-medium hover:underline">
                             Read about my technical journey <ArrowRight size={16} className="ml-1" />
                         </Link>
