@@ -26,6 +26,7 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_CLOUDFLARE_PAGES: 1
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
