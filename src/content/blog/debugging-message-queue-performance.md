@@ -1,4 +1,5 @@
 ---
+title: Why My Queue Latency Spiked (And Why Adding More Consumers Did Nothing)
 date: January 18, 2025
 readTime: 10 min read
 excerpt: A look at why horizontal scaling fails when you have a database bottleneck.

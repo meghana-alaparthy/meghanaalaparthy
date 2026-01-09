@@ -1,4 +1,5 @@
 ---
+title: Distributed Sagas Are Messier Than They Look
 date: January 15, 2025
 readTime: 12 min read
 excerpt: Lessons learned implementing the Saga pattern for a high-volume financial system.
