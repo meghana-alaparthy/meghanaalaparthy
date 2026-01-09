@@ -13,10 +13,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Meghana Alaparthy | Software Developer (SDE III)",
-  description: "Scalable web applications, microservices, and distributed systems. Expert in React, C#, and Cloud Infrastructure.",
-};
 export default function RootLayout({
   children,
 }: Readonly<{
