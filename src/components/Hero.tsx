@@ -34,18 +34,6 @@ export function Hero() {
                         {resumeData.personalInfo.name}
                     </h1>
 
-                    {/* Strategic Impact Stats */}
-                    <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-8 mb-8 text-muted-foreground font-medium">
-                        <div className="flex items-center justify-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-green-500" />
-                            <span>Scaling Java & Python microservices</span>
-                        </div>
-                        <div className="hidden md:block text-slate-300">|</div>
-                        <div className="flex items-center justify-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-blue-500" />
-                            <span>Breaking down monoliths into services</span>
-                        </div>
-                    </div>
 
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-4">
                         I'm looking for <strong>Senior/Staff SWE (SDE III/IV) roles</strong> where I can work on complex distributed systems.

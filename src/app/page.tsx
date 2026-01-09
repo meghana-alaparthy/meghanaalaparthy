@@ -13,6 +13,10 @@ export default function Home() {
                 <div className="container max-w-5xl mx-auto grid md:grid-cols-3 gap-12">
                     <div className="md:col-span-2 space-y-6">
                         <h2 className="text-2xl font-bold text-foreground">About Me</h2>
+                        <p className="text-muted-foreground leading-relaxed">
+                            I'm a <strong>Software Developer III at Paycom</strong>, working on the backend systems that power our payroll and HR products.
+                            I spend most of my time designing microservices, optimizing database performance, and ensuring our distributed infrastructure can handle peak loads without breaking.
+                        </p>
                         <Link href="/about" className="inline-flex items-center text-primary font-medium hover:underline">
                             Read about my technical journey <ArrowRight size={16} className="ml-1" />
                         </Link>
@@ -49,8 +53,8 @@ export default function Home() {
                                 <p className="text-muted-foreground mb-4 text-sm flex-grow">
                                     {project.description}
                                 </p>
-                                <div className="text-sm font-medium text-blue-600 mb-6">
-                                    🚀 {project.outcome}
+                                <div className="text-sm font-medium text-blue-600 mb-6 flex items-start gap-2">
+                                    <span className="mt-0.5">⚡</span> {project.outcome}
                                 </div>
                                 <div className="flex flex-wrap gap-2 mt-auto">
                                     {project.techStack.map(tech => (

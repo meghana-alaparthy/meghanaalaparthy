@@ -8,7 +8,6 @@ export const resumeData = {
         github: "https://github.com/meghana-alaparthy",
         role: "Software Developer III (SDE III / IV)"
     },
-    summary: "Software Developer III at Paycom, focused on backend architecture and distributed systems. I work on breaking down monolithic applications into event-driven microservices to improve reliability and scale. My day-to-day involves seeing features through from initial design to production, ensuring they are observable, resilient, and performant.",
     skills: {
         languages: ["C#", "Python", "Java", "JavaScript", "TypeScript", "SQL", "PHP"],
         frameworks: ["React", "HTML/CSS", "RESTful APIs", "Spring Boot"],
